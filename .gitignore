@@ -1,0 +1,58 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Build & Next.js
+/.next/
+/out/
+/build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Testing
+/coverage
+
+# Environment (local secrets never committed)
+.env
+.env.local
+.env.*.local
+
+# IDE & editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+*.pem
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# Vercel
+.vercel
+
+# Cache & temp
+*.cache
+.turbo/
+dist/
+.agents/
+.claude/
+PRODUCT.md
+skills-lock.json
+skills-lock.json/
