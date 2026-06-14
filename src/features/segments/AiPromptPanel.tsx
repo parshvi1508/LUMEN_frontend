@@ -50,7 +50,7 @@ export function AiPromptPanel({
   return (
     <section
       aria-label="Describe your segment"
-      className="rounded-xl border border-ai-border bg-ai/40 p-4"
+      className="rounded-xl border-2 border-ai-border bg-gradient-to-br from-ai/40 via-ai/20 to-background p-4 shadow-sm"
     >
       <div className="mb-2 flex items-center gap-2">
         <Sparkles className="size-4 text-ai-foreground" aria-hidden />
@@ -59,7 +59,7 @@ export function AiPromptPanel({
         </h2>
       </div>
       <p className="mb-2.5 text-xs text-muted-foreground">
-        Plain English - the AI returns rules you can review and edit below.
+        Plain English. The AI returns rules you can review and edit below.
       </p>
 
       <textarea
@@ -107,7 +107,7 @@ export function AiPromptPanel({
           <p className="text-xs text-destructive">{errorMsg}</p>
           {fallback && (
             <p className="text-xs text-muted-foreground">
-              Build the rules manually below - the visual builder works the same way.
+              Build the rules manually below. The visual builder works the same way.
             </p>
           )}
         </div>

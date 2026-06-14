@@ -18,6 +18,7 @@ import {
   ChevronsUpDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 import { useAuth } from "@/components/providers";
 import { TopBar } from "@/components/layout/TopBar";
 
@@ -108,7 +109,29 @@ function SidebarContent() {
         <BrandMark />
       </div>
       <NavList />
+      <StatusStrip />
       <SidebarFooter />
+    </div>
+  );
+}
+
+function StatusStrip() {
+  return (
+    <div className="mx-3 mb-2 rounded-lg border border-border bg-surface-2 px-2.5 py-2 space-y-1">
+      <div className="flex items-center justify-between text-[11px]">
+        <span className="text-muted-foreground">Channel</span>
+        <span className="flex items-center gap-1 font-medium text-foreground">
+          <span className="size-1.5 rounded-full bg-success-foreground" aria-hidden />
+          Simulated
+        </span>
+      </div>
+      <div className="flex items-center justify-between text-[11px]">
+        <span className="text-muted-foreground">AI</span>
+        <span className="flex items-center gap-1 font-medium text-foreground">
+          <span className="size-1.5 rounded-full bg-success-foreground" aria-hidden />
+          Groq
+        </span>
+      </div>
     </div>
   );
 }
@@ -124,7 +147,7 @@ function BrandMark() {
         <Zap className="size-4 text-white drop-shadow-sm" aria-hidden />
       </div>
       <span className="text-sm font-semibold text-foreground tracking-tight">
-        Lumen
+        {BRAND.name}
       </span>
     </Link>
   );

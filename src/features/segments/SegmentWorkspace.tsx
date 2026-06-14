@@ -136,7 +136,7 @@ export function SegmentWorkspace() {
     <>
       <PageHeader
         title="Segments"
-        description="Build an audience with rules or plain English. Every rule shows its live reach, so you can see exactly who you're targeting before you save."
+        description="Build an audience in plain English or with rules. Preview who is included before you save."
       />
 
       <p className="mx-6 mt-6 rounded-lg border border-border bg-surface-1 px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground md:mx-8">
@@ -232,7 +232,7 @@ export function SegmentWorkspace() {
                 {source === "ai" ? "AI" : "manual"}
               </span>
               {source === "ai" && aiRationale
-                ? " - the AI rationale is stored with it."
+                ? ". The AI rationale is stored with it."
                 : "."}
             </p>
             {saveError && (

@@ -132,7 +132,7 @@ function GroupEditor({
         ))}
         {node.children.length === 0 && (
           <p className="px-1 py-2 text-xs text-muted-foreground">
-            Empty group - add a rule.
+            Empty group. Add a rule to get started.
           </p>
         )}
       </div>

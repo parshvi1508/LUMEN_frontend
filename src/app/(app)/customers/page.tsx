@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Customer } from "@/lib/schemas/customer";
 import { Upload, X } from "lucide-react";
+import { BRAND } from "@/lib/brand";
 
 export default function CustomersPage() {
   const [uploadOpen, setUploadOpen] = useState(false);
@@ -32,7 +33,7 @@ export default function CustomersPage() {
       {/* ── Page header ── */}
       <PageHeader
         title="Customers"
-        description="Your full customer list, ranked by tier. Click any row to see the profile."
+        description="Everyone in your customer list. Search, filter, or upload a CSV to add more."
         actions={
           <button
             type="button"
@@ -48,11 +49,12 @@ export default function CustomersPage() {
       {/* ── Table ── */}
       <div className="px-6 md:px-8 py-6">
         <p className="mb-4 rounded-lg border border-border bg-surface-1 px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground">
-          This is your brand&apos;s shared customer book. Rows are colour-tagged by
-          tier (VIP, active, at-risk, churned). Search or sort to find people,
-          click a row for the full profile, or use{" "}
-          <span className="font-medium text-foreground">Import</span> to add
-          customers from a CSV.
+          <span className="inline-flex items-center gap-1.5 rounded border border-border bg-surface-2 px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground mr-2">
+            {BRAND.sampleLabel}
+          </span>
+          Rows are colour-tagged by tier (VIP, active, at-risk, churned).
+          Search or sort to find people, click a row for the full profile,
+          or use <span className="font-medium text-foreground">Import</span> to add customers from a CSV.
         </p>
         <Suspense fallback={<TableFallback />}>
           <CustomerTable

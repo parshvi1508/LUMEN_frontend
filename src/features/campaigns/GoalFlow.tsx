@@ -124,7 +124,8 @@ export function GoalFlow() {
           Approved & dispatched
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
-          The campaign is live. Watch the funnel fill in real time.
+          {(proposal?.audience_size ?? 0).toLocaleString("en-IN")} messages queued to the channel (simulated).
+          Watch the funnel fill in real time.
         </p>
         <div className="mt-4 flex items-center justify-center gap-3">
           <Link
@@ -149,11 +150,11 @@ export function GoalFlow() {
   return (
     <div className="space-y-5">
       {/* goal input */}
-      <section className="rounded-xl border border-ai-border bg-ai/40 p-4">
+      <section className="rounded-xl border-2 border-ai-border bg-gradient-to-br from-ai/40 via-ai/20 to-background p-4 shadow-sm">
         <div className="mb-2 flex items-center gap-2">
           <Sparkles className="size-4 text-ai-foreground" aria-hidden />
           <h3 className="text-sm font-semibold text-foreground">
-            State a goal - the agent proposes everything
+            State a goal, the agent proposes everything
           </h3>
         </div>
         <textarea
@@ -178,7 +179,7 @@ export function GoalFlow() {
         </div>
         <div className="mt-2.5 flex items-center justify-between">
           <span className="text-[11px] text-muted-foreground">
-            Proposes a segment, channel, and copy - for your review.
+            Proposes a segment, channel, and copy for your review.
           </span>
           <AsyncButton
             onClick={onPropose}
@@ -204,7 +205,7 @@ export function GoalFlow() {
           <div className="flex items-center gap-2 bg-ai px-4 py-2">
             <Badge variant="ai">AI proposal</Badge>
             <span className="text-xs font-medium text-ai-foreground">
-              Draft only - nothing has been created or sent. Edit anything below.
+              Draft only. Nothing has been created or sent. Edit anything below.
             </span>
           </div>
 
@@ -229,7 +230,7 @@ export function GoalFlow() {
                   <SegmentRulesView definition={proposal.segment_definition} />
                 </div>
                 <p className="text-[11px] text-muted-foreground">
-                  Segment is read-only here - to change the audience, build it on the
+                  Segment is read-only here. To change the audience, build it on the
                   Segments page first.
                 </p>
               </div>
@@ -258,7 +259,7 @@ export function GoalFlow() {
             {/* variants */}
             <div>
               <h4 className="mb-2 text-sm font-semibold text-foreground">
-                Message - pick a variant, then edit
+                Message: pick a variant, then edit
               </h4>
               <div className="grid gap-2.5 md:grid-cols-3">
                 {proposal.variants.map((v, i) => (
@@ -298,9 +299,9 @@ export function GoalFlow() {
                 </span>{" "}
                 to {(proposal.audience_size ?? 0).toLocaleString("en-IN")} customers
                 {edited ? (
-                  <> - <span className="font-medium text-foreground">with your edits</span>.</>
+                  <>, <span className="font-medium text-foreground">with your edits</span>.</>
                 ) : (
-                  <> - running the agent&apos;s proposal <span className="font-medium text-foreground">as-is</span>.</>
+                  <>, running the agent&apos;s proposal <span className="font-medium text-foreground">as-is</span>.</>
                 )}
               </p>
             </div>
@@ -324,7 +325,7 @@ export function GoalFlow() {
             </div>
             {(proposal.audience_size ?? 0) === 0 && (
               <p className="mt-2 text-xs text-warning-foreground">
-                Proposed segment matches no customers - nothing to send.
+                Proposed segment matches no customers, nothing to send.
               </p>
             )}
             {approveErr && (

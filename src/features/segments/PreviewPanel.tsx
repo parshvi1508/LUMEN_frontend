@@ -112,7 +112,7 @@ export function PreviewPanel({
                   ))}
                 </ul>
                 <p className="mt-1.5 text-[11px] leading-snug text-muted-foreground">
-                  Each number is how many customers match that rule on its own - not
+                  Each number is how many customers match that rule on its own, not
                   the marginal effect of removing it.
                 </p>
               </div>

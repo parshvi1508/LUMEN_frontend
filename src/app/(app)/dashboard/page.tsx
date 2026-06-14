@@ -36,7 +36,7 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description="Your customer base at a glance - and the one move worth making next."
+        description="Your CRM at a glance. See customers, campaigns, and delivery health, then start a new campaign."
         actions={
           <Link
             href="/customers"

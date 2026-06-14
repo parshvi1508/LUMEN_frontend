@@ -6,9 +6,19 @@ export const KNOWN_TOKENS = [
   "city",
   "total_spend",
   "last_order_amount",
+  "last_order_at",
 ] as const;
 
 export type KnownToken = (typeof KNOWN_TOKENS)[number];
+
+export const TOKEN_LABELS: Record<KnownToken, string> = {
+  first_name: "First name",
+  name: "Full name",
+  city: "City",
+  total_spend: "Total spend",
+  last_order_amount: "Last order amount",
+  last_order_at: "Last order date",
+};
 
 // Sample customer used only for the client-side preview (no server preview endpoint).
 export const SAMPLE_FIELDS: Record<string, string> = {
@@ -17,6 +27,7 @@ export const SAMPLE_FIELDS: Record<string, string> = {
   city: "Mumbai",
   total_spend: "18,400",
   last_order_amount: "2,499",
+  last_order_at: "12 Jun",
 };
 
 const TOKEN_RE = /\{\{(\w+)\}\}/g;
