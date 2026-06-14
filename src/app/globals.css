@@ -93,7 +93,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.540 0.195 328);
+  --primary: oklch(0.555 0.205 285);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -102,12 +102,12 @@
   --accent: oklch(0.820 0.140 65);
   --accent-foreground: oklch(0.145 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  --border: oklch(0.940 0.004 285);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.540 0.195 328);
+  --ring: oklch(0.555 0.205 285);
 
   /* Multi-hue chart palette - magenta, amber, teal, blue, violet */
-  --chart-1: oklch(0.620 0.205 328);
+  --chart-1: oklch(0.600 0.215 285);
   --chart-2: oklch(0.780 0.150 66);
   --chart-3: oklch(0.680 0.130 168);
   --chart-4: oklch(0.580 0.160 252);
@@ -147,7 +147,7 @@
   --radius: 0.75rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.540 0.195 328);
+  --sidebar-primary: oklch(0.555 0.205 285);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);

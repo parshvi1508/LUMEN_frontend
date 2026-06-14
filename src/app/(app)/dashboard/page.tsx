@@ -57,6 +57,27 @@ export default function DashboardPage() {
         ) : (
           <>
             {/* ── KPI row - real aggregates from the live customer list ── */}
+            {/* Gradient hero band - states the product thesis up top */}
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-[oklch(0.52_0.2_312)] p-6 text-primary-foreground shadow-raised">
+              <div className="relative z-10 max-w-xl">
+                <p className="text-sm font-medium opacity-80">Welcome back</p>
+                <h2 className="mt-1 text-xl font-semibold leading-snug">
+                  Decide who to reach and what to say, with the reasoning shown.
+                </h2>
+                <p className="mt-1.5 text-sm opacity-90">
+                  Your customer base at a glance, and the one move worth making next.
+                </p>
+              </div>
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-12 -top-12 size-52 rounded-full bg-white/10 blur-2xl"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -bottom-16 right-24 size-40 rounded-full bg-white/10 blur-2xl"
+              />
+            </div>
+
             <Stagger
               aria-label="Key metrics"
               role="group"

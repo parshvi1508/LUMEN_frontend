@@ -24,10 +24,22 @@ const TONE: Record<
   NonNullable<KpiCardProps["tone"]>,
   { card: string; icon: string }
 > = {
-  default: { card: "from-primary/10", icon: "bg-primary/15 text-primary" },
-  success: { card: "from-success", icon: "bg-success-foreground/10 text-success-foreground" },
-  warning: { card: "from-warning", icon: "bg-warning-foreground/10 text-warning-foreground" },
-  info: { card: "from-info", icon: "bg-info-foreground/10 text-info-foreground" },
+  default: {
+    card: "from-primary/10",
+    icon: "bg-gradient-to-br from-primary to-primary/70 text-primary-foreground",
+  },
+  success: {
+    card: "from-success",
+    icon: "bg-gradient-to-br from-success-foreground to-success-foreground/75 text-white",
+  },
+  warning: {
+    card: "from-warning",
+    icon: "bg-gradient-to-br from-warning-foreground to-warning-foreground/75 text-white",
+  },
+  info: {
+    card: "from-info",
+    icon: "bg-gradient-to-br from-info-foreground to-info-foreground/75 text-white",
+  },
 };
 
 /**
