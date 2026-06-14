@@ -165,7 +165,7 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
               <section
                 aria-label="Customers by tier"
-                className="rounded-xl border border-border bg-surface-2 p-5 shadow-card lg:col-span-3"
+                className="rounded-2xl border border-border bg-surface-2 p-6 shadow-card lg:col-span-3"
               >
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-semibold text-foreground">Customers by tier</h2>
@@ -202,7 +202,7 @@ function RecentActivity({
   return (
     <section
       aria-label="Recent activity"
-      className="flex flex-col rounded-xl border border-border bg-surface-2 p-5 shadow-card lg:col-span-2"
+      className="flex flex-col rounded-2xl border border-border bg-surface-2 p-6 shadow-card lg:col-span-2"
     >
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold text-foreground">Recently added</h2>
