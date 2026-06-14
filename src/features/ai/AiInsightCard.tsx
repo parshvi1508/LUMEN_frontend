@@ -66,7 +66,7 @@ export function AiInsightCard({
           <button
             type="button"
             onClick={cta.onClick}
-            className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg bg-ai-accent px-3.5 py-2 text-sm font-semibold text-[oklch(0.20_0.02_60)] shadow-sm transition-colors hover:bg-ai-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ai-accent sm:self-center"
+            className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg bg-ai-accent px-3.5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-ai-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ai-accent sm:self-center"
           >
             {cta.label}
             <ArrowRight className="size-4" aria-hidden />
