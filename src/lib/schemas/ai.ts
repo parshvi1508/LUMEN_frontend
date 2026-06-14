@@ -63,7 +63,7 @@ export type ProposeCampaignRequest = z.infer<
 >;
 
 export const ProposeCampaignResponseSchema = z.object({
-  campaign_id: z.string(),
+  campaign_id: z.string().nullable(),
   proposal_state: z.string(),
   goal: z.string(),
   segment_definition: z.record(z.string(), z.unknown()),
