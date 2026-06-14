@@ -10,9 +10,12 @@ import {
   XCircle,
   Radio,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CountUp } from "@/components/motion/CountUp";
+import { Stagger, StaggerItem } from "@/components/motion/motion";
 import { isApiError } from "@/lib/api";
 import { useCampaign, useCampaignStats } from "@/hooks/useCampaigns";
 import { computeReach } from "./funnel";
@@ -136,30 +139,38 @@ export function CampaignDetail({ id }: { id: string }) {
         ) : stats.data ? (
           <>
             {/* KPIs */}
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-              <Kpi
-                icon={<Users className="size-4" aria-hidden />}
-                label="Audience"
-                value={stats.data.audience_size ?? total}
-              />
-              <Kpi
-                icon={<Send className="size-4" aria-hidden />}
-                label="Messages"
-                value={total}
-              />
-              <Kpi
-                icon={<TrendingUp className="size-4 text-success-foreground" aria-hidden />}
-                label="Converted"
-                value={converted}
-                sub={`${(conversionRate * 100).toFixed(1)}% of sent`}
-              />
-              <Kpi
-                icon={<XCircle className="size-4 text-destructive" aria-hidden />}
-                label="Failed"
-                value={failed}
-                sub={`${(failureRate * 100).toFixed(1)}% failure rate`}
-              />
-            </div>
+            <Stagger className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+              <StaggerItem>
+                <Kpi
+                  icon={<Users className="size-4" aria-hidden />}
+                  label="Audience"
+                  value={stats.data.audience_size ?? total}
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <Kpi
+                  icon={<Send className="size-4" aria-hidden />}
+                  label="Messages"
+                  value={total}
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <Kpi
+                  icon={<TrendingUp className="size-4 text-success-foreground" aria-hidden />}
+                  label="Converted"
+                  value={converted}
+                  sub={`${(conversionRate * 100).toFixed(1)}% of sent`}
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <Kpi
+                  icon={<XCircle className="size-4 text-destructive" aria-hidden />}
+                  label="Failed"
+                  value={failed}
+                  sub={`${(failureRate * 100).toFixed(1)}% failure rate`}
+                />
+              </StaggerItem>
+            </Stagger>
 
             {/* funnel + raw stage numbers, side by side */}
             <section className="rounded-xl border border-border bg-surface-1 p-4">
@@ -184,9 +195,12 @@ export function CampaignDetail({ id }: { id: string }) {
                           {r.label}
                         </span>
                         <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
-                          <div
+                          <motion.div
                             className="h-full rounded-full"
-                            style={{ width: `${pct}%`, background: r.fill }}
+                            style={{ background: r.fill }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${pct}%` }}
+                            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                           />
                         </div>
                         <span className="w-20 shrink-0 text-right text-sm tabular-nums text-foreground">
@@ -215,9 +229,11 @@ export function CampaignDetail({ id }: { id: string }) {
               ) : (
                 <div className="flex items-center gap-3">
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-                    <div
+                    <motion.div
                       className="h-full rounded-full bg-destructive"
-                      style={{ width: `${failureRate * 100}%` }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${failureRate * 100}%` }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     />
                   </div>
                   <span className="text-sm tabular-nums text-foreground">
@@ -257,7 +273,7 @@ function Kpi({
         {label}
       </div>
       <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
-        {value.toLocaleString("en-IN")}
+        <CountUp value={value} />
       </p>
       {sub && <p className="text-[11px] text-muted-foreground">{sub}</p>}
     </div>

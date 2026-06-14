@@ -1,6 +1,8 @@
 "use client";
 
 import { Plus, Layers } from "lucide-react";
+import { motion } from "framer-motion";
+import { staggerParent, fadeUp } from "@/components/motion/motion";
 import { StatePanel, type StatePanelStatus } from "@/components/ui/StatePanel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -68,9 +70,14 @@ export function SavedSegmentsList({
         }
       >
         {(segments) => (
-          <ul className="space-y-1.5">
+          <motion.ul
+            className="space-y-1.5"
+            variants={staggerParent}
+            initial="hidden"
+            animate="show"
+          >
             {segments.map((seg) => (
-              <li key={seg.id}>
+              <motion.li key={seg.id} variants={fadeUp}>
                 <button
                   type="button"
                   onClick={() => onLoad(seg)}
@@ -99,9 +106,9 @@ export function SavedSegmentsList({
                     })}
                   </p>
                 </button>
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
         )}
       </StatePanel>
     </aside>
