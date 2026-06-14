@@ -1,26 +1,10 @@
 "use client";
 
-import { Fragment, type ReactNode } from "react";
 import { Check, Lightbulb } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { MessageVariant } from "@/lib/schemas/ai";
-
-// Render {{first_name}} as a friendly chip ("first name"), never raw code.
-function renderTokens(text: string): ReactNode {
-  return text.split(/(\{\{\w+\}\})/g).map((part, i) =>
-    /^\{\{\w+\}\}$/.test(part) ? (
-      <span
-        key={i}
-        className="mx-0.5 rounded bg-primary/10 px-1 text-[0.95em] font-medium text-primary"
-      >
-        {part.replace(/[{}]/g, "").replace(/_/g, " ")}
-      </span>
-    ) : (
-      <Fragment key={i}>{part}</Fragment>
-    ),
-  );
-}
+import { renderPreview } from "./tokens";
 
 // Reasoning is shown prominently - it is the product thesis (explainable AI).
 export function VariantCard({
@@ -59,7 +43,7 @@ export function VariantCard({
       </div>
 
       <p className="whitespace-pre-wrap rounded-lg bg-background px-2.5 py-2 text-sm text-foreground/90">
-        {renderTokens(variant.message)}
+        {renderPreview(variant.message)}
       </p>
 
       <div className="flex items-start gap-1.5 text-xs text-muted-foreground">

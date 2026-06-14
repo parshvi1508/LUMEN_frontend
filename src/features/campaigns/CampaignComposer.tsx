@@ -31,7 +31,7 @@ export function CampaignComposer() {
     <>
       <PageHeader
         title="New campaign"
-        description="Build a campaign yourself, or let the agent propose one from a goal. Either way, the AI's reasoning is on the table and nothing sends without your say-so."
+        description="Pick an audience, let AI draft the message, choose a channel, review, and send."
       >
         <div role="tablist" aria-label="Campaign mode" className="flex flex-wrap gap-2">
           {TABS.map(({ id, label, hint, Icon }) => {

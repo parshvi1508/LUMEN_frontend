@@ -13,7 +13,7 @@ import { Stagger, StaggerItem } from "@/components/motion/motion";
 import { useCampaignsList, useDeleteCampaign } from "@/hooks/useCampaigns";
 import { isApiError } from "@/lib/api";
 import type { CampaignOut } from "@/lib/schemas/campaign";
-import { CAMPAIGN_STATUS_VARIANT, campaignStatusLabel } from "./status";
+import { CAMPAIGN_STATUS_VARIANT, campaignStatusLabel, campaignStatusHint } from "./status";
 
 export function CampaignsHub() {
   const router = useRouter();
@@ -108,7 +108,10 @@ export function CampaignsHub() {
                       <Users className="size-3.5" aria-hidden />
                       {(c.audience_size ?? 0).toLocaleString("en-IN")}
                     </span>
-                    <Badge variant={CAMPAIGN_STATUS_VARIANT[c.status ?? "draft"] ?? "secondary"}>
+                    <Badge
+                      variant={CAMPAIGN_STATUS_VARIANT[c.status ?? "draft"] ?? "secondary"}
+                      title={campaignStatusHint(c.status)}
+                    >
                       {campaignStatusLabel(c.status)}
                     </Badge>
                     <button

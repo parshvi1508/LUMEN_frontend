@@ -21,7 +21,7 @@ import { useCampaign, useCampaignStats } from "@/hooks/useCampaigns";
 import { computeReach } from "./funnel";
 import { FunnelChart } from "./FunnelChart";
 import { InsightPanel } from "./InsightPanel";
-import { CAMPAIGN_STATUS_VARIANT, campaignStatusLabel } from "./status";
+import { CAMPAIGN_STATUS_VARIANT, campaignStatusLabel, campaignStatusHint } from "./status";
 
 export function CampaignDetail({ id }: { id: string }) {
   const campaign = useCampaign(id);
@@ -65,6 +65,13 @@ export function CampaignDetail({ id }: { id: string }) {
   const polling = interval !== false;
   const insightEnabled = total > 0;
 
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    if (!polling) return;
+    const t = window.setInterval(() => setNow(Date.now()), 2000);
+    return () => clearInterval(t);
+  }, [polling]);
+
   return (
     <>
       <PageHeader
@@ -80,15 +87,18 @@ export function CampaignDetail({ id }: { id: string }) {
         title={campaign.data?.name ?? "Campaign"}
         description={
           campaign.data
-            ? `${campaign.data.channel ?? "-"} · created ${new Date(
+            ? `Watch this campaign move from sent to opened to converted, with an AI summary of what happened. ${campaign.data.channel ?? "-"} · created ${new Date(
                 campaign.data.created_at,
               ).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
-            : undefined
+            : "Watch this campaign move from sent to opened to converted, with an AI summary of what happened."
         }
         actions={
           status ? (
             <div className="flex items-center gap-2">
-              <Badge variant={CAMPAIGN_STATUS_VARIANT[status] ?? "secondary"}>
+              <Badge
+                variant={CAMPAIGN_STATUS_VARIANT[status] ?? "secondary"}
+                title={campaignStatusHint(status)}
+              >
                 {campaignStatusLabel(status)}
               </Badge>
               {polling ? (
@@ -129,7 +139,17 @@ export function CampaignDetail({ id }: { id: string }) {
               Retry
             </button>
           </div>
-        ) : stats.data ? (
+        ) : !stats.data ? (
+          <div className="rounded-xl border border-dashed border-border bg-surface-1 p-8 text-center">
+            <Send className="mx-auto size-6 text-muted-foreground" aria-hidden />
+            <p className="mt-2 text-sm font-medium text-foreground">
+              Waiting for dispatch
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Stats will appear here once the campaign sends its first messages.
+            </p>
+          </div>
+        ) : (
           <>
             {/* KPIs */}
             <Stagger className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -167,10 +187,22 @@ export function CampaignDetail({ id }: { id: string }) {
 
             {/* funnel + raw stage numbers, side by side */}
             <section className="rounded-xl border border-border bg-surface-1 p-4">
-              <h2 className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-foreground">
-                <Radio className="size-4 text-muted-foreground" aria-hidden />
-                Delivery funnel
-              </h2>
+              <div className="mb-3 flex items-center justify-between gap-2">
+                <h2 className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                  <Radio className="size-4 text-muted-foreground" aria-hidden />
+                  Delivery funnel
+                </h2>
+                <div className="flex items-center gap-3">
+                  {polling && stats.dataUpdatedAt > 0 && (
+                    <span className="text-[11px] tabular-nums text-muted-foreground">
+                      Updated {Math.round((now - stats.dataUpdatedAt) / 1000)}s ago
+                    </span>
+                  )}
+                  <span className="rounded-md border border-border bg-surface-2 px-2 py-0.5 text-[11px] text-muted-foreground">
+                    Simulated channel (demo)
+                  </span>
+                </div>
+              </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <FunnelChart rows={rows} />
                 {/* the raw numbers behind the chart - checkable */}
@@ -216,7 +248,7 @@ export function CampaignDetail({ id }: { id: string }) {
               </h2>
               {failed === 0 ? (
                 <p className="text-sm text-muted-foreground">
-                  No failures - all {total.toLocaleString("en-IN")} messages were
+                  No failures. All {total.toLocaleString("en-IN")} messages were
                   accepted by the channel.
                 </p>
               ) : (
@@ -242,7 +274,7 @@ export function CampaignDetail({ id }: { id: string }) {
             {/* AI insight beside the numbers it cites */}
             <InsightPanel id={id} enabled={insightEnabled} />
           </>
-        ) : null}
+        )}
       </div>
     </>
   );

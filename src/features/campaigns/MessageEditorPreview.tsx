@@ -4,9 +4,11 @@ import { AlertTriangle, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   KNOWN_TOKENS,
+  TOKEN_LABELS,
   SAMPLE_FIELDS,
   renderPreview,
   unknownTokens,
+  type KnownToken,
 } from "./tokens";
 
 export function MessageEditorPreview({
@@ -39,9 +41,9 @@ export function MessageEditorPreview({
             key={t}
             type="button"
             onClick={() => onChange(`${value}${value.endsWith(" ") || !value ? "" : " "}{{${t}}}`)}
-            className="rounded-md border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[11px] text-foreground/80 hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+            className="rounded-md border border-primary/20 bg-primary/5 px-1.5 py-0.5 text-[11px] font-medium text-primary hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
           >
-            {`{{${t}}}`}
+            {TOKEN_LABELS[t as KnownToken]}
           </button>
         ))}
       </div>
@@ -52,8 +54,7 @@ export function MessageEditorPreview({
           <span>
             Unknown token{unknown.length > 1 ? "s" : ""}{" "}
             <span className="font-mono">{unknown.map((t) => `{{${t}}}`).join(", ")}</span>{" "}
-            will be sent literally - only {KNOWN_TOKENS.map((t) => `{{${t}}}`).join(", ")} are
-            substituted.
+            will be sent literally. Supported tokens: {KNOWN_TOKENS.map((t) => TOKEN_LABELS[t as KnownToken]).join(", ")}.
           </span>
         </p>
       )}
@@ -68,7 +69,7 @@ export function MessageEditorPreview({
           {value ? renderPreview(value) : "Your message preview shows here."}
         </p>
         <p className="mt-1.5 text-[11px] text-muted-foreground">
-          Sample values - each customer gets their own at send time.
+          Sample values. Each customer gets their own at send time.
         </p>
       </div>
     </div>
