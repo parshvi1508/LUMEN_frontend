@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { Menu } from "@base-ui/react/menu";
-import { Search, Plus, ChevronRight, Upload, Wand2, Megaphone } from "lucide-react";
+import { Search, Plus, ChevronRight, Upload, Wand2, Megaphone, Network } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
@@ -58,6 +59,19 @@ export function TopBar() {
           />
         </div>
       </form>
+
+      {/* Architecture - static system-thinking page for reviewers */}
+      <Link
+        href="/architecture"
+        aria-label="System architecture"
+        aria-current={pathname === "/architecture" ? "page" : undefined}
+        className={cn(
+          "hidden size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface-2 text-muted-foreground shadow-card transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring sm:flex",
+          pathname === "/architecture" && "border-primary/40 bg-primary/10 text-primary",
+        )}
+      >
+        <Network className="size-4" aria-hidden />
+      </Link>
 
       {/* Theme toggle */}
       <ThemeToggle />
