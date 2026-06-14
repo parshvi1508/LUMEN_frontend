@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -9,6 +10,9 @@ import {
   TriangleAlert,
   ArrowRight,
   UserPlus,
+  Sparkles,
+  Wand2,
+  Megaphone,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
@@ -58,15 +62,34 @@ export default function DashboardPage() {
           <>
             {/* ── KPI row - real aggregates from the live customer list ── */}
             {/* Gradient hero band - states the product thesis up top */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-foreground p-6 text-white shadow-raised">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-ai-accent p-6 text-white shadow-raised">
               <div className="relative z-10 max-w-xl">
                 <p className="text-sm font-medium opacity-80">Welcome back</p>
                 <h2 className="mt-1 text-xl font-semibold leading-snug">
                   Decide who to reach and what to say, with the reasoning shown.
                 </h2>
                 <p className="mt-1.5 text-sm opacity-90">
-                  Your customer base at a glance, and the one move worth making next.
+                  Three moves run this CRM. Pick one to start.
                 </p>
+                {/* 10-second orientation: the core actions, stated plainly. */}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <HeroAction
+                    href="/campaigns/new"
+                    icon={<Sparkles className="size-4" aria-hidden />}
+                    label="Propose a campaign"
+                    ai
+                  />
+                  <HeroAction
+                    href="/segments"
+                    icon={<Wand2 className="size-4" aria-hidden />}
+                    label="Build a segment"
+                  />
+                  <HeroAction
+                    href="/campaigns"
+                    icon={<Megaphone className="size-4" aria-hidden />}
+                    label="See live campaigns"
+                  />
+                </div>
               </div>
               <div
                 aria-hidden
@@ -74,7 +97,7 @@ export default function DashboardPage() {
               />
               <div
                 aria-hidden
-                className="pointer-events-none absolute -bottom-16 right-24 size-40 rounded-full bg-white/10 blur-2xl"
+                className="pointer-events-none absolute -bottom-16 right-24 size-40 rounded-full bg-white/15 blur-2xl"
               />
             </div>
 
@@ -189,6 +212,34 @@ export default function DashboardPage() {
         )}
       </div>
     </>
+  );
+}
+
+function HeroAction({
+  href,
+  icon,
+  label,
+  ai = false,
+}: {
+  href: string;
+  icon: ReactNode;
+  label: string;
+  ai?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group inline-flex items-center gap-2 rounded-lg bg-white/15 px-3 py-2 text-sm font-medium text-white ring-1 ring-inset ring-white/25 backdrop-blur-sm transition-all hover:bg-white/25 hover:ring-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+    >
+      {icon}
+      {label}
+      {ai && (
+        <span className="rounded bg-ai-accent px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-ai-accent-foreground">
+          AI
+        </span>
+      )}
+      <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
+    </Link>
   );
 }
 

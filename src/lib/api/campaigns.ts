@@ -22,6 +22,18 @@ export async function dispatchCampaign(id: string): Promise<CampaignOut> {
   return apiPost<CampaignOut>(`/api/v1/campaigns/${id}/dispatch`, {});
 }
 
+// POST /api/v1/campaigns/{id}/approve - mark an AI proposal approved (bodyless).
+// Used only when the human accepts the proposal unchanged.
+export async function approveCampaign(id: string): Promise<CampaignOut> {
+  return apiPost<CampaignOut>(`/api/v1/campaigns/${id}/approve`, {});
+}
+
+// POST /api/v1/campaigns/{id}/execute - dispatch an approved proposal (bodyless).
+// Runs the backend's real proposal lifecycle; requires approve first (409 otherwise).
+export async function executeCampaign(id: string): Promise<CampaignOut> {
+  return apiPost<CampaignOut>(`/api/v1/campaigns/${id}/execute`, {});
+}
+
 // GET /api/v1/campaigns/{id}
 export async function getCampaign(id: string): Promise<CampaignOut> {
   return apiGet<CampaignOut>(`/api/v1/campaigns/${id}`);

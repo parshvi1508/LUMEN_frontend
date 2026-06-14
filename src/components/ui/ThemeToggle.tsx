@@ -18,9 +18,19 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(dark ? "light" : "dark")}
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
-      className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface-2 text-muted-foreground shadow-card transition-colors hover:bg-muted hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+      className="group flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface-2 text-muted-foreground shadow-card transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring motion-reduce:transition-none"
     >
-      {dark ? <Sun className="size-4" aria-hidden /> : <Moon className="size-4" aria-hidden />}
+      {dark ? (
+        <Sun
+          className="size-4 transition-transform duration-300 ease-out group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+          aria-hidden
+        />
+      ) : (
+        <Moon
+          className="size-4 transition-transform duration-300 ease-out group-hover:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+          aria-hidden
+        />
+      )}
     </button>
   );
 }
