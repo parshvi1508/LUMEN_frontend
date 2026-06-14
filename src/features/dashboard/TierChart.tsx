@@ -48,6 +48,21 @@ export function TierChart({ counts }: { counts: Record<CustomerTier, number> }) 
     <div className="h-44 w-full" aria-hidden>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
+          <defs>
+            {data.map((d) => (
+              <linearGradient
+                key={d.tier}
+                id={`bar-${d.tier}`}
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+                <stop offset="0%" stopColor={TIER_FILL[d.tier]} stopOpacity={0.95} />
+                <stop offset="100%" stopColor={TIER_FILL[d.tier]} stopOpacity={0.45} />
+              </linearGradient>
+            ))}
+          </defs>
           <XAxis
             dataKey="label"
             tickLine={false}
@@ -62,9 +77,9 @@ export function TierChart({ counts }: { counts: Record<CustomerTier, number> }) 
             width={32}
           />
           <Tooltip cursor={{ fill: "var(--muted)", opacity: 0.4 }} content={<CustomTooltip />} />
-          <Bar dataKey="count" radius={[6, 6, 0, 0]} maxBarSize={64}>
+          <Bar dataKey="count" radius={[8, 8, 0, 0]} maxBarSize={56}>
             {data.map((d) => (
-              <Cell key={d.tier} fill={TIER_FILL[d.tier]} />
+              <Cell key={d.tier} fill={`url(#bar-${d.tier})`} />
             ))}
           </Bar>
         </BarChart>
