@@ -128,7 +128,7 @@ function NotifyForm({ surface }: { surface: string }) {
         </div>
         <button
           type="submit"
-          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-ai-accent px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-ai-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ai-accent"
+          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-ai-accent px-4 text-sm font-semibold text-ai-accent-foreground shadow-sm transition-colors hover:bg-ai-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ai-accent"
         >
           <Bell className="size-4" aria-hidden />
           Notify me
