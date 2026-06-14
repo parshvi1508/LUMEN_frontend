@@ -41,13 +41,13 @@ export function KpiCard({
   isError,
 }: KpiCardProps) {
   return (
-    <div className="rounded-xl border border-border bg-surface-2 p-4 shadow-card">
+    <div className="group rounded-2xl border border-border bg-surface-2 p-4 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-raised">
       <div className="flex items-start justify-between gap-2">
         <p className="text-sm font-medium text-muted-foreground">{label}</p>
         {icon && (
           <span
             className={cn(
-              "flex size-7 shrink-0 items-center justify-center rounded-lg",
+              "flex size-8 shrink-0 items-center justify-center rounded-xl ring-1 ring-inset ring-foreground/5 transition-transform duration-200 group-hover:scale-105",
               TONE_ICON[tone],
             )}
             aria-hidden

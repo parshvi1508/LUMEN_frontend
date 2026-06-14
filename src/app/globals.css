@@ -72,8 +72,8 @@
   --color-card: var(--card);
 
   /* ── Elevation: shadow language ────────────────────────────────────── */
-  --shadow-card: 0 1px 2px 0 oklch(0.205 0.02 300 / 0.05), 0 1px 3px 0 oklch(0.205 0.02 300 / 0.06);
-  --shadow-raised: 0 2px 4px -1px oklch(0.205 0.02 300 / 0.07), 0 6px 16px -4px oklch(0.205 0.02 300 / 0.10);
+  --shadow-card: 0 1px 2px 0 oklch(0.21 0.02 285 / 0.06), 0 4px 12px -2px oklch(0.21 0.02 285 / 0.08);
+  --shadow-raised: 0 2px 6px -1px oklch(0.21 0.02 285 / 0.08), 0 12px 28px -6px oklch(0.21 0.02 285 / 0.12);
   --shadow-overlay: 0 10px 28px -6px oklch(0.205 0.02 300 / 0.18), 0 2px 6px -2px oklch(0.205 0.02 300 / 0.10);
   --shadow-ai: 0 0 0 1px var(--ai-border), 0 6px 22px -6px oklch(0.78 0.15 68 / 0.30);
 
@@ -138,12 +138,13 @@
   --ai-border: oklch(0.870 0.080 75);
   --ai-accent: oklch(0.780 0.150 68);
 
-  /* Elevation surfaces - chrome (1) < data cards (2) < overlays/AI (3) */
-  --surface-1: oklch(0.984 0.003 95);
+  /* Elevation surfaces - chrome (1) < data cards (2) < overlays/AI (3).
+     surface-1 carries a faint cool tint so white data cards lift off it. */
+  --surface-1: oklch(0.975 0.005 274);
   --surface-2: oklch(1 0 0);
   --surface-3: oklch(1 0 0);
 
-  --radius: 0.625rem;
+  --radius: 0.75rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.540 0.195 328);
