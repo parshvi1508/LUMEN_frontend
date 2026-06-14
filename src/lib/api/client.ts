@@ -38,13 +38,25 @@ async function parseErrorBody(res: Response): Promise<ApiError> {
 
   const b = body as Record<string, unknown>;
 
+  // FastAPI surfaces errors as `detail` (a string, or a list of validation
+  // objects). Read it so real causes (502 channel down, 409 bad state) reach
+  // the user instead of a generic fallback. Fall back to `message` for any
+  // endpoint that uses it, then statusText.
+  let detailMsg: string | undefined;
+  if (typeof b.detail === "string") {
+    detailMsg = b.detail;
+  } else if (Array.isArray(b.detail) && b.detail.length > 0) {
+    const first = b.detail[0] as { msg?: unknown };
+    if (typeof first?.msg === "string") detailMsg = first.msg;
+  }
+
   return {
     status: res.status,
     code: typeof b.code === "string" ? b.code : String(res.status),
     message:
       typeof b.message === "string"
         ? b.message
-        : res.statusText || "An unexpected error occurred.",
+        : detailMsg ?? res.statusText ?? "An unexpected error occurred.",
     fieldErrors:
       b.field_errors != null &&
       typeof b.field_errors === "object" &&
