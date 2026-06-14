@@ -1,10 +1,14 @@
 import type { ReactNode } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CountUp } from "@/components/motion/CountUp";
 import { cn } from "@/lib/utils";
 
 interface KpiCardProps {
   label: string;
   value?: ReactNode;
+  /** When set, the value animates a count-up to this number (formatted by `format`). */
+  countTo?: number;
+  format?: (n: number) => string;
   /** Small icon shown top-right, tinted per tone. */
   icon?: ReactNode;
   /** Sub-line under the value (context, comparison). */
@@ -28,6 +32,8 @@ const TONE_ICON: Record<NonNullable<KpiCardProps["tone"]>, string> = {
 export function KpiCard({
   label,
   value,
+  countTo,
+  format,
   icon,
   hint,
   tone = "default",
@@ -55,7 +61,13 @@ export function KpiCard({
           <Skeleton className="h-8 w-24" />
         ) : (
           <p className="text-2xl font-semibold tabular-nums tracking-tight text-foreground">
-            {isError ? "—" : value}
+            {isError ? (
+              "—"
+            ) : countTo != null ? (
+              <CountUp value={countTo} format={format} />
+            ) : (
+              value
+            )}
           </p>
         )}
         {hint && !isLoading && (

@@ -13,6 +13,8 @@ import {
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Stagger, StaggerItem } from "@/components/motion/motion";
 import { AiInsightCard } from "@/features/ai/AiInsightCard";
 import { TierChart } from "@/features/dashboard/TierChart";
 import { TierBadge } from "@/features/customers/TierBadge";
@@ -55,43 +57,57 @@ export default function DashboardPage() {
         ) : (
           <>
             {/* ── KPI row — real aggregates from the live customer list ── */}
-            <section aria-label="Key metrics" className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <KpiCard
-                label="Total customers"
-                value={data?.total.toLocaleString("en-IN")}
-                icon={<Users className="size-4" />}
-                hint={data?.sampled ? "metrics below sampled from 500" : "your full book"}
-                isLoading={isLoading}
-                isError={isError}
-              />
-              <KpiCard
-                label="Total spend"
-                value={data && formatCurrency(data.totalSpend)}
-                icon={<IndianRupee className="size-4" />}
-                tone="success"
-                hint="lifetime, all customers"
-                isLoading={isLoading}
-                isError={isError}
-              />
-              <KpiCard
-                label="Avg order value"
-                value={data && formatCurrency(data.avgOrderValue)}
-                icon={<Receipt className="size-4" />}
-                tone="info"
-                hint="spend ÷ orders"
-                isLoading={isLoading}
-                isError={isError}
-              />
-              <KpiCard
-                label="At-risk"
-                value={data?.dormant60.toLocaleString("en-IN")}
-                icon={<TriangleAlert className="size-4" />}
-                tone="warning"
-                hint="60+ days since last order"
-                isLoading={isLoading}
-                isError={isError}
-              />
-            </section>
+            <Stagger
+              aria-label="Key metrics"
+              role="group"
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+            >
+              <StaggerItem>
+                <KpiCard
+                  label="Total customers"
+                  countTo={data?.total}
+                  icon={<Users className="size-4" />}
+                  hint={data?.sampled ? "metrics below sampled from 500" : "your full book"}
+                  isLoading={isLoading}
+                  isError={isError}
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <KpiCard
+                  label="Total spend"
+                  countTo={data?.totalSpend}
+                  format={formatCurrency}
+                  icon={<IndianRupee className="size-4" />}
+                  tone="success"
+                  hint="lifetime, all customers"
+                  isLoading={isLoading}
+                  isError={isError}
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <KpiCard
+                  label="Avg order value"
+                  countTo={data?.avgOrderValue}
+                  format={formatCurrency}
+                  icon={<Receipt className="size-4" />}
+                  tone="info"
+                  hint="spend ÷ orders"
+                  isLoading={isLoading}
+                  isError={isError}
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <KpiCard
+                  label="At-risk"
+                  countTo={data?.dormant60}
+                  icon={<TriangleAlert className="size-4" />}
+                  tone="warning"
+                  hint="60+ days since last order"
+                  isLoading={isLoading}
+                  isError={isError}
+                />
+              </StaggerItem>
+            </Stagger>
 
             {/* ── AI insight — the one-click next move ── */}
             {isError ? (
@@ -136,7 +152,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-4">
                   {isLoading ? (
-                    <div className="h-44 animate-pulse rounded-lg bg-muted" />
+                    <Skeleton className="h-44 w-full rounded-lg" />
                   ) : data ? (
                     <TierChart counts={data.tierCounts} />
                   ) : null}
@@ -181,8 +197,8 @@ function RecentActivity({
         {isLoading
           ? Array.from({ length: 5 }).map((_, i) => (
               <li key={i} className="flex items-center gap-3 py-2.5">
-                <div className="size-7 shrink-0 animate-pulse rounded-full bg-muted" />
-                <div className="h-3 flex-1 animate-pulse rounded bg-muted" />
+                <Skeleton className="size-7 shrink-0 rounded-full" />
+                <Skeleton className="h-3 flex-1" />
               </li>
             ))
           : items.length === 0

@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Drawer } from "@base-ui/react/drawer";
+import { MotionConfig } from "framer-motion";
 import {
   LayoutDashboard,
   Users,
@@ -89,7 +90,7 @@ export function AppShell({ children }: AppShellProps) {
           tabIndex={-1}
           className="flex-1 focus:outline-none"
         >
-          {children}
+          <MotionConfig reducedMotion="user">{children}</MotionConfig>
         </main>
       </div>
     </div>
