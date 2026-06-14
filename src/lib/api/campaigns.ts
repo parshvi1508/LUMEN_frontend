@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "./client";
+import { apiDelete, apiGet, apiPost } from "./client";
 import type {
   CampaignCreate,
   CampaignOut,
@@ -37,6 +37,11 @@ export async function executeCampaign(id: string): Promise<CampaignOut> {
 // GET /api/v1/campaigns/{id}
 export async function getCampaign(id: string): Promise<CampaignOut> {
   return apiGet<CampaignOut>(`/api/v1/campaigns/${id}`);
+}
+
+// DELETE /api/v1/campaigns/{id} - hard delete campaign + cascade
+export async function deleteCampaign(id: string): Promise<void> {
+  return apiDelete<void>(`/api/v1/campaigns/${id}`);
 }
 
 // GET /api/v1/campaigns/{id}/stats - funnel + failure + conversion counts

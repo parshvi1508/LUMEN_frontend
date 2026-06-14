@@ -62,7 +62,7 @@ export function GoalFlow() {
       setChannel(res.recommended_channel as Channel);
       setSelectedIdx(0);
       setMessage(res.variants[0]?.message ?? "");
-      setName(`Proposed: ${goal.trim().slice(0, 50)}`);
+      setName(goal.trim().slice(0, 50));
     } catch {
       /* surfaced via propose.error */
     }
@@ -85,7 +85,7 @@ export function GoalFlow() {
     setPhase("working");
     try {
       const segment = await createSegment({
-        name: name.trim() || `Proposed: ${goal.trim().slice(0, 50)}`,
+        name: name.trim() || goal.trim().slice(0, 50),
         definition: proposal.segment_definition as unknown as RuleGroup,
         source: "ai",
         ai_rationale: proposal.segment_rationale,

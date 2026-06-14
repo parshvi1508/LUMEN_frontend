@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "./client";
+import { apiDelete, apiGet, apiPost } from "./client";
 import type {
   PreviewRequest,
   PreviewResponse,
@@ -28,4 +28,9 @@ export async function getSegments(): Promise<SegmentOut[]> {
 // GET /api/v1/segments/{id}
 export async function getSegment(id: string): Promise<SegmentOut> {
   return apiGet<SegmentOut>(`/api/v1/segments/${id}`);
+}
+
+// DELETE /api/v1/segments/{id} (204)
+export async function deleteSegment(id: string): Promise<void> {
+  return apiDelete<void>(`/api/v1/segments/${id}`);
 }
