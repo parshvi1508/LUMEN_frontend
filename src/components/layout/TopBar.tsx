@@ -61,7 +61,7 @@ export function TopBar() {
       {/* Primary Create action */}
       <Menu.Root>
         <Menu.Trigger
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-card transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-gradient-to-b from-primary to-primary/90 px-3 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:to-primary/80 hover:shadow-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <Plus className="size-4" aria-hidden />
           <span className="hidden sm:inline">Create</span>
