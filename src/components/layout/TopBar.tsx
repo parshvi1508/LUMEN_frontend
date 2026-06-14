@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { Menu } from "@base-ui/react/menu";
 import { Search, Plus, ChevronRight, Upload, Wand2, Megaphone } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const SECTION_LABEL: Record<string, string> = {
   dashboard: "Dashboard",
@@ -57,6 +58,9 @@ export function TopBar() {
           />
         </div>
       </form>
+
+      {/* Theme toggle */}
+      <ThemeToggle />
 
       {/* Primary Create action */}
       <Menu.Root>
