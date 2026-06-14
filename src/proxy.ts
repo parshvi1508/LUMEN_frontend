@@ -1,13 +1,18 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Public routes that do not require authentication
-const PUBLIC_PATHS = ["/", "/login", "/auth/callback", "/dashboard", "/customers", "/segments", "/campaigns"];
+// Public routes that do not require authentication.
+// NOTE: app routes (/dashboard, /customers, /segments, /campaigns) are NOT here
+// on purpose — they must be gated. "/" is matched exactly (every path startsWith
+// "/", so it can't be a prefix) and "/auth" covers the OAuth callback.
+const PUBLIC_PREFIXES = ["/login", "/auth"];
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Let public paths through without auth checks
-  if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
+  const isPublic =
+    pathname === "/" || PUBLIC_PREFIXES.some((p) => pathname.startsWith(p));
+  if (isPublic) {
     return NextResponse.next();
   }
 
