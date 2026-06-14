@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Mermaid } from "@/components/ui/Mermaid";
-import { ARCHITECTURE_DIAGRAM, RECEIPT_LOOP_DIAGRAM } from "@/lib/diagrams";
 
 // Static reviewer-facing page. No data fetching by design: it exists to show
 // system thinking in one place, not to scatter diagrams onto functional pages.
+// Diagrams are pre-rendered SVGs (public/diagrams) so they render identically
+// here and in the GitHub README, with no client-side diagram library.
 export default function ArchitecturePage() {
   return (
     <>
@@ -49,8 +50,15 @@ export default function ArchitecturePage() {
             Four deployable units. The two backend services share nothing at runtime
             and talk over HTTP only.
           </p>
-          <div className="mt-4">
-            <Mermaid chart={ARCHITECTURE_DIAGRAM} label="System architecture diagram" />
+          <div className="mt-4 overflow-x-auto rounded-lg border border-border bg-white">
+            <Image
+              src="/diagrams/architecture.svg"
+              alt="System architecture: frontend to CRM API to channel service, database and LLM"
+              width={980}
+              height={440}
+              unoptimized
+              className="h-auto w-full"
+            />
           </div>
         </section>
 
@@ -62,8 +70,15 @@ export default function ArchitecturePage() {
             duplicates and retries. The CRM keeps each communication correct under
             all of it: idempotent inserts, never-downgrade status, harmless retries.
           </p>
-          <div className="mt-4">
-            <Mermaid chart={RECEIPT_LOOP_DIAGRAM} label="Receipt loop sequence diagram" />
+          <div className="mt-4 overflow-x-auto rounded-lg border border-border bg-white">
+            <Image
+              src="/diagrams/receipt-loop.svg"
+              alt="Receipt loop sequence: HMAC verify, dedupe, idempotent insert, never-downgrade status, harmless retry"
+              width={1020}
+              height={620}
+              unoptimized
+              className="h-auto w-full"
+            />
           </div>
         </section>
       </div>
