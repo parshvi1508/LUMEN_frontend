@@ -14,7 +14,7 @@ interface PageHeaderProps {
 }
 
 /**
- * Shared page header primitive — every route renders its title block through
+ * Shared page header primitive - every route renders its title block through
  * this so spacing, typography, and the action slot stay consistent. Chrome
  * (surface-1) so it reads as a frame around the data surfaces below it.
  */

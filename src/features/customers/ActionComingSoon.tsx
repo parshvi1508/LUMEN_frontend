@@ -9,12 +9,12 @@ const COPY: Record<ComingSoonAction, { title: string; icon: typeof Wand2; body: 
   segment: {
     title: "Segments are coming soon",
     icon: Wand2,
-    body: "Soon you'll group these customers into a saved, reusable audience — by hand or from a plain-English prompt — then target them in a campaign.",
+    body: "Soon you'll group these customers into a saved, reusable audience - by hand or from a plain-English prompt - then target them in a campaign.",
   },
   email: {
     title: "Campaigns are coming soon",
     icon: Mail,
-    body: "Soon you'll draft AI-assisted message variants for these customers, review the reasoning, and dispatch — with nothing sending without your approval.",
+    body: "Soon you'll draft AI-assisted message variants for these customers, review the reasoning, and dispatch - with nothing sending without your approval.",
   },
 };
 

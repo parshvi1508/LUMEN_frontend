@@ -6,14 +6,14 @@ import type {
   SegmentOut,
 } from "@/lib/schemas/segment";
 
-// POST /api/v1/segments/preview — rule AST -> {count, sample, per_rule_impact}
+// POST /api/v1/segments/preview - rule AST -> {count, sample, per_rule_impact}
 export async function previewSegment(
   body: PreviewRequest,
 ): Promise<PreviewResponse> {
   return apiPost<PreviewResponse>("/api/v1/segments/preview", body);
 }
 
-// POST /api/v1/segments — create (201)
+// POST /api/v1/segments - create (201)
 export async function createSegment(
   body: SegmentCreate,
 ): Promise<SegmentOut> {

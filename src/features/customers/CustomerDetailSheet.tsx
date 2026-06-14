@@ -38,7 +38,7 @@ export function CustomerDetailSheet({
           )}
         >
           <Drawer.Title className="sr-only">
-            {customer ? `${customer.name} — customer details` : "Customer details"}
+            {customer ? `${customer.name} - customer details` : "Customer details"}
           </Drawer.Title>
           <Drawer.Description className="sr-only">
             Customer profile, statistics, notes, and tags
@@ -150,7 +150,7 @@ function SheetContent({ customer, onClose }: { customer: Customer; onClose: () =
 
           <Separator />
 
-          {/* Orders — honest empty state, no fabricated history */}
+          {/* Orders - honest empty state, no fabricated history */}
           <section aria-label="Order history">
             <SectionLabel>Orders</SectionLabel>
             <div className="rounded-xl border border-dashed border-border bg-surface-1 px-5 py-6 text-center">
@@ -181,7 +181,7 @@ function SheetContent({ customer, onClose }: { customer: Customer; onClose: () =
 
           <Separator />
 
-          {/* Tags + Notes — local affordances, clearly not yet synced */}
+          {/* Tags + Notes - local affordances, clearly not yet synced */}
           <TagsEditor />
           <NotesEditor />
         </div>
@@ -265,7 +265,7 @@ function NotesEditor() {
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
         rows={3}
-        placeholder="Add context for your team — preferences, past conversations, anything useful."
+        placeholder="Add context for your team - preferences, past conversations, anything useful."
         aria-label="Customer notes"
         className="mt-3 w-full resize-y rounded-lg border border-border bg-surface-1 px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
       />

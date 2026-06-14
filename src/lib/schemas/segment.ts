@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// Wire-format rule AST — mirrors backend crm_api/schemas/segments.py exactly.
+// Wire-format rule AST - mirrors backend crm_api/schemas/segments.py exactly.
 // NOTE: this is the over-the-wire shape ({op, rules} / {field, cmp, value}).
 // The UI builder type (SegmentAST in lib/schemas/types.ts) uses a different,
 // id-bearing shape and must be mapped to this before hitting the API.
@@ -12,7 +12,7 @@ export const RuleLeafSchema = z.object({
 });
 export type RuleLeaf = z.infer<typeof RuleLeafSchema>;
 
-// Recursive group — zod v4 getter pattern (avoids z.lazy deep-instantiation issues)
+// Recursive group - zod v4 getter pattern (avoids z.lazy deep-instantiation issues)
 export const RuleGroupSchema = z.object({
   op: z.enum(["AND", "OR"]),
   get rules() {

@@ -1,4 +1,4 @@
-// Normalized API error — all hooks surface this shape (FRONTEND_SPEC §4.3)
+// Normalized API error - all hooks surface this shape (FRONTEND_SPEC §4.3)
 export interface ApiError {
   status: number;
   code: string;

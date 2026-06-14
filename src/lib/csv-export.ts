@@ -14,7 +14,7 @@ function escapeCell(value: unknown): string {
   return `"${String(value ?? "").replace(/"/g, '""')}"`;
 }
 
-/** Download the given customers as a CSV — a real, working bulk/row action. */
+/** Download the given customers as a CSV - a real, working bulk/row action. */
 export function exportCustomersCsv(customers: Customer[], filename = "lumen-customers.csv") {
   const header = COLUMNS.join(",");
   const rows = customers.map((c) => COLUMNS.map((k) => escapeCell(c[k])).join(","));

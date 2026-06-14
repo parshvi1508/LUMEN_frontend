@@ -34,7 +34,7 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="flex h-full min-h-screen">
-      {/* Skip-to-content — first focusable element on the page */}
+      {/* Skip-to-content - first focusable element on the page */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg focus:outline focus:outline-2 focus:outline-ring"
@@ -114,7 +114,7 @@ function BrandMark() {
     <Link
       href="/dashboard"
       className="flex items-center gap-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-      aria-label="Lumen CRM — go to dashboard"
+      aria-label="Lumen CRM - go to dashboard"
     >
       <div className="flex size-7 items-center justify-center rounded-lg bg-primary">
         <Zap className="size-4 text-primary-foreground" aria-hidden />
@@ -178,7 +178,7 @@ function SidebarFooter() {
           {initials}
         </div>
         <p className="flex-1 min-w-0 text-xs text-muted-foreground truncate">
-          {user?.email ?? "—"}
+          {user?.email ?? "-"}
         </p>
         <button
           type="button"

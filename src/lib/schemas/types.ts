@@ -1,4 +1,4 @@
-// Domain type stubs — expanded per feature as contracts are confirmed with backend.
+// Domain type stubs - expanded per feature as contracts are confirmed with backend.
 
 export interface CustomerFilters {
   search?: string;
@@ -6,7 +6,7 @@ export interface CustomerFilters {
   pageSize?: number;
 }
 
-// Segment rule AST — mirrors backend Pydantic model (FRONTEND_SPEC §5.2)
+// Segment rule AST - mirrors backend Pydantic model (FRONTEND_SPEC §5.2)
 export type SegmentOperator = "AND" | "OR";
 
 // Comparators mirror backend WHITELIST in crm_api/services/segment_compiler.py exactly.
@@ -34,7 +34,7 @@ export const SEGMENT_FIELDS = [
 ] as const;
 export type SegmentField = (typeof SEGMENT_FIELDS)[number];
 
-// Per-field allowed comparators — mirrors backend WHITELIST. The builder must only
+// Per-field allowed comparators - mirrors backend WHITELIST. The builder must only
 // offer these combos; anything else makes /preview and /segments return 422.
 export const FIELD_COMPARATORS: Record<SegmentField, Comparator[]> = {
   total_spend: ["eq", "gt", "gte", "lt", "lte"],
@@ -65,7 +65,7 @@ export type SegmentAST = SegmentGroup;
 // Channel
 export type Channel = "whatsapp" | "sms" | "email";
 
-// Campaign status — matches backend CHECK constraint (models.py Campaign).
+// Campaign status - matches backend CHECK constraint (models.py Campaign).
 export type CampaignStatus =
   | "draft"
   | "dispatching"

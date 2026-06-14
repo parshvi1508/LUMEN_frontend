@@ -5,7 +5,7 @@ import { getCustomers } from "@/lib/api/customers";
 import { deriveTier, type CustomerTier } from "@/lib/customer-tier";
 import type { Customer } from "@/lib/schemas/customer";
 
-// Aggregates are computed from the live customer list — no fabricated numbers.
+// Aggregates are computed from the live customer list - no fabricated numbers.
 // We pull a bounded slice; if the base is larger, `sampled` is true so the UI
 // can be honest that the figures are from a sample, not the full book.
 const STATS_SAMPLE = 500;
@@ -16,7 +16,7 @@ export interface CustomerStats {
   totalSpend: number;
   avgOrderValue: number;
   tierCounts: Record<CustomerTier, number>;
-  /** Customers with no order in 60+ days — the win-back pool. */
+  /** Customers with no order in 60+ days - the win-back pool. */
   dormant60: number;
   /** Most recently added customers (real created_at), newest first. */
   recentlyAdded: Customer[];

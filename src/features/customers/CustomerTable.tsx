@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
 
 const PAGE_SIZE = 20;
 
-// Row tint by tier — VIP/at-risk pop, churned recedes (rank-ordering, not flat).
+// Row tint by tier - VIP/at-risk pop, churned recedes (rank-ordering, not flat).
 const ROW_TINT: Record<ReturnType<typeof deriveTier>, string> = {
   vip: "bg-vip/40 hover:bg-vip/50",
   "at-risk": "bg-warning/40 hover:bg-warning/50",
@@ -152,7 +152,7 @@ export function CustomerTable({ onUploadClick, onRowClick }: CustomerTableProps)
     <div className="space-y-4">
       <TableToolbar value={searchInput} onChange={handleSearch} onUploadClick={onUploadClick} />
 
-      {/* Tier legend — teaches the color system at a glance */}
+      {/* Tier legend - teaches the color system at a glance */}
       {!isLoading && (data?.total ?? 0) > 0 && <TierLegend />}
 
       <DataTable

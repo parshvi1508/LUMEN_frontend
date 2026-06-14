@@ -33,7 +33,7 @@ interface DataTableProps<TData> {
   isLoading?: boolean;
   emptyState?: ReactNode;
   onRowClick?: (row: TData) => void;
-  // Controlled — caller owns sorting state (server-side or client-side)
+  // Controlled - caller owns sorting state (server-side or client-side)
   sorting?: SortingState;
   onSortingChange?: OnChangeFn<SortingState>;
   // Controlled pagination (server-side)
@@ -41,7 +41,7 @@ interface DataTableProps<TData> {
   onPaginationChange?: OnChangeFn<PaginationState>;
   pageCount?: number;
   totalRows?: number;
-  // Sorting mode — defaults to server-side when an onSortingChange is supplied.
+  // Sorting mode - defaults to server-side when an onSortingChange is supplied.
   // Pass false to sort the loaded rows client-side (e.g. derived columns).
   manualSorting?: boolean;
   // Row selection (opt-in)
@@ -207,7 +207,7 @@ export function DataTable<TData>({
         </Table>
       </div>
 
-      {/* Pagination controls — only shown when pagination is active */}
+      {/* Pagination controls - only shown when pagination is active */}
       {pagination != null && pageCount != null && pageCount > 1 && (
         <div className="flex items-center justify-between px-1 text-sm text-muted-foreground">
           <span>

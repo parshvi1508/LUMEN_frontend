@@ -37,7 +37,7 @@ export function TopBar() {
         </span>
       </nav>
 
-      {/* Global search — routes to the customer book */}
+      {/* Global search - routes to the customer book */}
       <form onSubmit={submitSearch} className="ml-auto w-full max-w-xs sm:ml-6" role="search">
         <label htmlFor="global-search" className="sr-only">
           Search customers

@@ -8,7 +8,7 @@ interface QueryProviderProps {
 }
 
 export function QueryProvider({ children }: QueryProviderProps) {
-  // One QueryClient per browser session — useState ensures it's stable across
+  // One QueryClient per browser session - useState ensures it's stable across
   // React re-renders without leaking between SSR requests.
   const [client] = useState(
     () =>

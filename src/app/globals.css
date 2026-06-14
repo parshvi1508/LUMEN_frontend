@@ -106,14 +106,14 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.540 0.195 328);
 
-  /* Multi-hue chart palette — magenta, amber, teal, blue, violet */
+  /* Multi-hue chart palette - magenta, amber, teal, blue, violet */
   --chart-1: oklch(0.620 0.205 328);
   --chart-2: oklch(0.780 0.150 66);
   --chart-3: oklch(0.680 0.130 168);
   --chart-4: oklch(0.580 0.160 252);
   --chart-5: oklch(0.580 0.190 300);
 
-  /* Semantic — subtle bg / readable fg / defined border */
+  /* Semantic - subtle bg / readable fg / defined border */
   --success: oklch(0.962 0.040 152);
   --success-foreground: oklch(0.520 0.130 152);
   --success-border: oklch(0.880 0.070 152);
@@ -127,18 +127,18 @@
   --info-foreground: oklch(0.520 0.160 256);
   --info-border: oklch(0.880 0.060 248);
 
-  /* VIP tier — premium violet, distinct from warning/at-risk */
+  /* VIP tier - premium violet, distinct from warning/at-risk */
   --vip: oklch(0.965 0.035 312);
   --vip-foreground: oklch(0.520 0.190 308);
   --vip-border: oklch(0.880 0.075 312);
 
-  /* AI surface — warm amber wash, the accent doing functional work */
+  /* AI surface - warm amber wash, the accent doing functional work */
   --ai: oklch(0.985 0.020 82);
   --ai-foreground: oklch(0.470 0.105 58);
   --ai-border: oklch(0.870 0.080 75);
   --ai-accent: oklch(0.780 0.150 68);
 
-  /* Elevation surfaces — chrome (1) < data cards (2) < overlays/AI (3) */
+  /* Elevation surfaces - chrome (1) < data cards (2) < overlays/AI (3) */
   --surface-1: oklch(0.984 0.003 95);
   --surface-2: oklch(1 0 0);
   --surface-3: oklch(1 0 0);

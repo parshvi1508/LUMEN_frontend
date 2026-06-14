@@ -1,6 +1,6 @@
 import type { Customer } from "@/lib/schemas/customer";
 
-// Customer lifecycle tier — derived from recency + spend, never stored.
+// Customer lifecycle tier - derived from recency + spend, never stored.
 // VIP and At-risk are the two that must visually pop: one is your best,
 // the other is the one slipping away (the actionable one).
 export type CustomerTier = "vip" | "active" | "at-risk" | "churned";

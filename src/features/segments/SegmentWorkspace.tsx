@@ -36,7 +36,7 @@ export function SegmentWorkspace() {
   const preview = usePreviewSegment();
   const create = useCreateSegment();
 
-  // Only build a wire definition when every rule is complete — never send a
+  // Only build a wire definition when every rule is complete - never send a
   // payload the backend would 422 on.
   const complete = groupComplete(ast) && leafCount(ast) > 0;
   const wireDef = useMemo(
@@ -220,7 +220,7 @@ export function SegmentWorkspace() {
                 {source === "ai" ? "AI" : "manual"}
               </span>
               {source === "ai" && aiRationale
-                ? " — the AI rationale is stored with it."
+                ? " - the AI rationale is stored with it."
                 : "."}
             </p>
             {saveError && (

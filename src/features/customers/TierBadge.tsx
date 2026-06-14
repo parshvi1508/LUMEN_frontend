@@ -17,7 +17,7 @@ const VARIANT: Record<CustomerTier, "vip" | "success" | "warning" | "secondary">
 };
 
 /**
- * Tier pill — color carries meaning but is never the only signal: an icon and
+ * Tier pill - color carries meaning but is never the only signal: an icon and
  * the text label both communicate tier (a11y bar, FRONTEND_SPEC §8.2).
  */
 export function TierBadge({ tier }: { tier: CustomerTier }) {

@@ -51,7 +51,7 @@ export function AiPromptPanel({
         </h2>
       </div>
       <p className="mb-2.5 text-xs text-muted-foreground">
-        Plain English — the AI returns rules you can review and edit below.
+        Plain English - the AI returns rules you can review and edit below.
       </p>
 
       <textarea
@@ -86,7 +86,7 @@ export function AiPromptPanel({
           <p className="text-xs text-destructive">{errorMsg}</p>
           {fallback && (
             <p className="text-xs text-muted-foreground">
-              Build the rules manually below — the visual builder works the same way.
+              Build the rules manually below - the visual builder works the same way.
             </p>
           )}
         </div>

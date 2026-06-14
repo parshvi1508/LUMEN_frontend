@@ -13,7 +13,7 @@ function isGroup(node: SegmentRule | SegmentGroup): node is SegmentGroup {
 }
 
 export function ruleToWire(rule: SegmentRule): RuleLeaf {
-  // is_set / is_not_set take no operand on the backend — omit value
+  // is_set / is_not_set take no operand on the backend - omit value
   if (rule.comparator === "is_set" || rule.comparator === "is_not_set") {
     return { field: rule.field, cmp: rule.comparator };
   }

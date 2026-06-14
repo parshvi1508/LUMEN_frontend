@@ -78,7 +78,7 @@ export function getCustomerColumns(
       header: "City",
       enableSorting: true,
       cell: ({ row }) => (
-        <span className="text-muted-foreground">{row.original.city || "—"}</span>
+        <span className="text-muted-foreground">{row.original.city || "-"}</span>
       ),
     },
     {
@@ -120,7 +120,7 @@ export function getCustomerColumns(
             {formatRelativeTime(row.original.last_order_at)}
           </span>
         ) : (
-          <span className="text-muted-foreground">—</span>
+          <span className="text-muted-foreground">-</span>
         ),
     },
     {

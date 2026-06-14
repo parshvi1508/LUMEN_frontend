@@ -1,6 +1,32 @@
+import { createBrowserClient } from "@supabase/ssr";
 import { ApiResponseError, type ApiError } from "./errors";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+
+// Lazy browser Supabase client, reused across requests. Only ever used in the
+// browser (all data fetching runs in client components via TanStack Query).
+let _supabase: ReturnType<typeof createBrowserClient> | null = null;
+function supabase() {
+  _supabase ??= createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+  return _supabase;
+}
+
+// Attach the Supabase access token so the backend's JWT middleware (HS256, signed
+// with the Supabase JWT secret) accepts the request. No token -> no header; the
+// route is then gated by middleware anyway.
+async function authHeader(): Promise<Record<string, string>> {
+  if (typeof window === "undefined") return {};
+  try {
+    const { data } = await supabase().auth.getSession();
+    const token = data.session?.access_token;
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  } catch {
+    return {};
+  }
+}
 
 async function parseErrorBody(res: Response): Promise<ApiError> {
   let body: unknown;
@@ -40,11 +66,12 @@ export async function apiFetch<T>(
   init?: RequestInit,
 ): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
+    ...init,
     headers: {
       "Content-Type": "application/json",
+      ...(await authHeader()),
       ...(init?.headers ?? {}),
     },
-    ...init,
   });
 
   if (!res.ok) {
@@ -52,7 +79,7 @@ export async function apiFetch<T>(
     throw new ApiResponseError(apiError);
   }
 
-  // 204 No Content — return undefined cast to T
+  // 204 No Content - return undefined cast to T
   if (res.status === 204) return undefined as T;
 
   return res.json() as Promise<T>;
