@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Drawer } from "@base-ui/react/drawer";
+import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { MotionConfig } from "framer-motion";
 import {
   LayoutDashboard,
@@ -13,6 +14,8 @@ import {
   Menu,
   X,
   Zap,
+  LogOut,
+  ChevronsUpDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/providers";
@@ -117,7 +120,7 @@ function BrandMark() {
       className="flex items-center gap-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
       aria-label="Lumen CRM - go to dashboard"
     >
-      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-[oklch(0.28_0_0)] to-[oklch(0.10_0_0)] shadow-sm">
+      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-[oklch(0.50_0.16_264)] to-[oklch(0.34_0.14_268)] shadow-sm">
         <Zap className="size-4 text-white" aria-hidden />
       </div>
       <span className="text-sm font-semibold text-foreground tracking-tight">
@@ -165,30 +168,51 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
 
 function SidebarFooter() {
   const { user, signOut } = useAuth();
-  const initials = user?.email
-    ? user.email.slice(0, 2).toUpperCase()
-    : "??";
+  const email = user?.email ?? "";
+  const initials = email ? email.slice(0, 2).toUpperCase() : "??";
+  const name = email ? email.split("@")[0] : "Account";
 
   return (
-    <div className="border-t border-sidebar-border px-4 py-4">
-      <div className="flex items-center gap-2.5 min-w-0">
-        <div
-          aria-hidden
-          className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-semibold select-none"
-        >
-          {initials}
-        </div>
-        <p className="flex-1 min-w-0 text-xs text-muted-foreground truncate">
-          {user?.email ?? "-"}
-        </p>
-        <button
-          type="button"
-          onClick={signOut}
-          className="shrink-0 text-xs text-muted-foreground hover:text-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring rounded"
-        >
-          Out
-        </button>
-      </div>
+    <div className="border-t border-sidebar-border p-3">
+      <MenuPrimitive.Root>
+        <MenuPrimitive.Trigger className="flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+          <span
+            aria-hidden
+            className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary select-none"
+          >
+            {initials}
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-sm font-medium text-foreground">
+              {name}
+            </span>
+            <span className="block truncate text-xs text-muted-foreground">
+              {email || "Signed in"}
+            </span>
+          </span>
+          <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+        </MenuPrimitive.Trigger>
+        <MenuPrimitive.Portal>
+          <MenuPrimitive.Positioner side="top" align="start" sideOffset={8} className="z-50">
+            <MenuPrimitive.Popup className="w-56 rounded-xl border border-border bg-surface-3 p-1 shadow-overlay outline-none">
+              <div className="px-2.5 py-1.5">
+                <p className="text-xs text-muted-foreground">Signed in as</p>
+                <p className="truncate text-sm font-medium text-foreground">
+                  {email || "Account"}
+                </p>
+              </div>
+              <div className="my-1 h-px bg-border" />
+              <MenuPrimitive.Item
+                onClick={signOut}
+                className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-destructive outline-none data-[highlighted]:bg-destructive/10"
+              >
+                <LogOut className="size-4" aria-hidden />
+                Log out
+              </MenuPrimitive.Item>
+            </MenuPrimitive.Popup>
+          </MenuPrimitive.Positioner>
+        </MenuPrimitive.Portal>
+      </MenuPrimitive.Root>
     </div>
   );
 }

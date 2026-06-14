@@ -61,6 +61,21 @@ async function parseErrorBody(res: Response): Promise<ApiError> {
   };
 }
 
+// Replace em/en dashes with a hyphen in every string of a parsed response, so
+// no dash from live data or AI/LLM output ever reaches the rendered product.
+function deDash<T>(v: T): T {
+  if (typeof v === "string") {
+    return v.replace(/[—–]/g, "-") as unknown as T;
+  }
+  if (Array.isArray(v)) return v.map((x) => deDash(x)) as unknown as T;
+  if (v && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    for (const k in o) o[k] = deDash(o[k]);
+    return v;
+  }
+  return v;
+}
+
 export async function apiFetch<T>(
   path: string,
   init?: RequestInit,
@@ -82,7 +97,7 @@ export async function apiFetch<T>(
   // 204 No Content - return undefined cast to T
   if (res.status === 204) return undefined as T;
 
-  return res.json() as Promise<T>;
+  return deDash((await res.json()) as T);
 }
 
 // Convenience wrappers

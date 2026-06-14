@@ -212,7 +212,7 @@ export function DataTable<TData>({
         <div className="flex items-center justify-between px-1 text-sm text-muted-foreground">
           <span>
             {total > 0
-              ? `Showing ${startRow}–${endRow} of ${total}`
+              ? `Showing ${startRow}-${endRow} of ${total}`
               : "No results"}
           </span>
           <div className="flex items-center gap-1">
