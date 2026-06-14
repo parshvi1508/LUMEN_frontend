@@ -5,6 +5,11 @@ import type {
   CampaignStats,
 } from "@/lib/schemas/campaign";
 
+// GET /api/v1/campaigns - all campaigns, newest first
+export async function getCampaigns(): Promise<CampaignOut[]> {
+  return apiGet<CampaignOut[]>("/api/v1/campaigns");
+}
+
 // POST /api/v1/campaigns - create draft (201)
 export async function createCampaign(
   body: CampaignCreate,

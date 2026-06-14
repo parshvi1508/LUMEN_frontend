@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { type StatePanelStatus } from "@/components/ui/StatePanel";
 import { usePreviewSegment, useCreateSegment } from "@/hooks/useSegments";
+import { toast } from "sonner";
 import { isApiError } from "@/lib/api";
 import type { SegmentGroup } from "@/lib/schemas/types";
 import type { SegmentOut } from "@/lib/schemas/segment";
@@ -119,10 +120,13 @@ export function SegmentWorkspace() {
         source,
         ai_rationale: source === "ai" ? aiRationale : null,
       });
+      toast.success(`Segment "${name.trim()}" saved`);
     } catch (err) {
-      setSaveError(
-        isApiError(err) ? err.apiError.message : "Couldn't save the segment.",
-      );
+      const msg = isApiError(err)
+        ? err.apiError.message
+        : "Couldn't save the segment.";
+      setSaveError(msg);
+      toast.error(msg);
     }
   }
 

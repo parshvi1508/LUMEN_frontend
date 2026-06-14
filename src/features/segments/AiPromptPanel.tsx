@@ -8,6 +8,14 @@ import { useNlToSegment } from "@/hooks/useAi";
 import { isApiError } from "@/lib/api";
 import type { NLToSegmentResponse } from "@/lib/schemas/ai";
 
+// Starter prompts: teach what the AI can do and give a one-click demo path.
+// All map cleanly to the backend whitelist (spend, order_count, last_order, city).
+const EXAMPLES: { label: string; value: string }[] = [
+  { label: "Lapsed high-spenders", value: "High spenders who haven't ordered in 90 days" },
+  { label: "One-time buyers", value: "Customers with exactly one order" },
+  { label: "Mumbai VIPs", value: "Customers in Mumbai who have spent over 50000" },
+];
+
 export function AiPromptPanel({
   rationale,
   warnings,
@@ -65,6 +73,19 @@ export function AiPromptPanel({
         placeholder="High spenders in Mumbai who haven't ordered in 90 days"
         className="w-full resize-y rounded-lg border border-border bg-background px-2.5 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
       />
+
+      <div className="mt-2 flex flex-wrap gap-1.5">
+        {EXAMPLES.map((ex) => (
+          <button
+            key={ex.label}
+            type="button"
+            onClick={() => setPrompt(ex.value)}
+            className="rounded-full border border-ai-border bg-background px-2.5 py-1 text-[11px] font-medium text-foreground/80 transition-colors hover:bg-ai/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+          >
+            {ex.label}
+          </button>
+        ))}
+      </div>
 
       <div className="mt-2.5 flex items-center justify-between gap-2">
         <span className="text-[11px] text-muted-foreground">⌘/Ctrl + Enter</span>

@@ -6,8 +6,16 @@ import {
   createCampaign,
   dispatchCampaign,
   getCampaign,
+  getCampaigns,
   getCampaignStats,
 } from "@/lib/api/campaigns";
+
+export function useCampaignsList() {
+  return useQuery({
+    queryKey: qk.campaigns(),
+    queryFn: getCampaigns,
+  });
+}
 
 export function useCampaign(id: string) {
   return useQuery({
