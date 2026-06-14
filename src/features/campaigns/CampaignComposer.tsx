@@ -71,6 +71,16 @@ export function CampaignComposer() {
       </PageHeader>
 
       <div className="mx-auto max-w-3xl px-6 py-6 md:px-8">
+        {/* Plain-language orientation: most reviewers will not know the CRM terms. */}
+        <p className="mb-4 rounded-lg border border-border bg-surface-1 px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground">
+          <span className="font-medium text-foreground">Segment</span> = a saved group
+          of customers (for example, lapsed high-spenders).{" "}
+          <span className="font-medium text-foreground">Campaign</span> = one message
+          sent to one segment.{" "}
+          {mode === "standard"
+            ? "Here you pick the segment, the AI drafts the message, and you review before sending."
+            : "Here you state a goal, the AI proposes the segment, channel, and message with its reasoning, and nothing sends until you approve."}
+        </p>
         {mode === "standard" ? <StandardFlow /> : <GoalFlow />}
       </div>
     </>
