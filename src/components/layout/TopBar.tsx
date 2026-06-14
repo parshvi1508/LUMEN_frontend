@@ -78,14 +78,14 @@ export function TopBar() {
               <CreateItem
                 icon={<Wand2 className="size-4" />}
                 title="New segment"
-                desc="Coming soon"
+                desc="Build an audience"
                 onClick={() => router.push("/segments")}
               />
               <CreateItem
                 icon={<Megaphone className="size-4" />}
                 title="New campaign"
-                desc="Coming soon"
-                onClick={() => router.push("/campaigns")}
+                desc="Draft and send"
+                onClick={() => router.push("/campaigns/new")}
               />
             </Menu.Popup>
           </Menu.Positioner>

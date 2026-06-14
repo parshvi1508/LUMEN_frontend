@@ -29,6 +29,13 @@ function errText(err: unknown, fallback: string): string {
   return isApiError(err) ? err.apiError.message : fallback;
 }
 
+// Starter goals: show what "state a goal" means and give a one-click demo path.
+const EXAMPLE_GOALS: { label: string; value: string }[] = [
+  { label: "Win back lapsed", value: "Win back lapsed high-spenders this weekend" },
+  { label: "Reward loyalists", value: "Reward my most loyal customers with a thank-you" },
+  { label: "First repeat", value: "Re-engage one-time buyers with a first-repeat offer" },
+];
+
 export function GoalFlow() {
   const [goal, setGoal] = useState("");
   const [channel, setChannel] = useState<Channel>("email");
@@ -147,6 +154,18 @@ export function GoalFlow() {
           placeholder="Win back lapsed high-spenders this weekend"
           className="w-full resize-y rounded-lg border border-border bg-background px-2.5 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
         />
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {EXAMPLE_GOALS.map((ex) => (
+            <button
+              key={ex.label}
+              type="button"
+              onClick={() => setGoal(ex.value)}
+              className="rounded-full border border-ai-border bg-background px-2.5 py-1 text-[11px] font-medium text-foreground/80 transition-colors hover:bg-ai/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+            >
+              {ex.label}
+            </button>
+          ))}
+        </div>
         <div className="mt-2.5 flex items-center justify-between">
           <span className="text-[11px] text-muted-foreground">
             Proposes a segment, channel, and copy - for your review.
