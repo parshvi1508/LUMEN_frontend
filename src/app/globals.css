@@ -48,6 +48,7 @@
   --color-ai-foreground: var(--ai-foreground);
   --color-ai-border: var(--ai-border);
   --color-ai-accent: var(--ai-accent);
+  --color-ai-accent-foreground: var(--ai-accent-foreground);
 
   /* ── Elevation: surface levels ─────────────────────────────────────── */
   --color-surface-1: var(--surface-1);
@@ -75,7 +76,7 @@
   --shadow-card: 0 1px 2px 0 oklch(0.21 0.02 285 / 0.06), 0 4px 12px -2px oklch(0.21 0.02 285 / 0.08);
   --shadow-raised: 0 2px 6px -1px oklch(0.21 0.02 285 / 0.08), 0 12px 28px -6px oklch(0.21 0.02 285 / 0.12);
   --shadow-overlay: 0 10px 28px -6px oklch(0.205 0.02 300 / 0.18), 0 2px 6px -2px oklch(0.205 0.02 300 / 0.10);
-  --shadow-ai: 0 0 0 1px var(--ai-border), 0 6px 22px -6px oklch(0.58 0.20 280 / 0.28);
+  --shadow-ai: 0 0 0 1px var(--ai-border), 0 6px 22px -6px oklch(0.84 0.08 28 / 0.40);
 
   /* Radius capped 12-16px (spec): no blobs. --radius is 12px; nothing exceeds 16px. */
   --radius-sm: calc(var(--radius) * 0.6);
@@ -95,29 +96,31 @@
   --card-foreground: oklch(0.21 0.01 250);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.21 0.01 250);
-  /* ONE accent: indigo-violet "intelligence" signal. Primary actions + AI provenance. */
-  --primary: oklch(0.58 0.20 280);
+  /* Arctic-sunrise palette: BLUE = the data (primary actions), PINK = the AI/human
+     layer. One cold hue for the machine, one warm hue for intelligence. */
+  --primary: oklch(0.50 0.120 256);   /* steel blue - primary actions */
   --primary-foreground: oklch(0.99 0.002 250);
   --secondary: oklch(0.97 0.004 250);
   --secondary-foreground: oklch(0.21 0.01 250);
   --muted: oklch(0.97 0.004 250);
   --muted-foreground: oklch(0.55 0.01 250);
-  /* shadcn --accent stays NEUTRAL (ghost hover / dropdown items). The violet
-     accent is --primary; do not route brand color through here. */
+  /* shadcn --accent stays NEUTRAL (ghost hover / dropdown items). Brand blue is
+     --primary, AI pink is --ai-*; do not route either through here. */
   --accent: oklch(0.97 0.004 250);
   --accent-foreground: oklch(0.21 0.01 250);
   --destructive: oklch(0.58 0.21 25);
   --border: oklch(0.92 0.006 250);
   --input: oklch(0.92 0.006 250);
-  --ring: oklch(0.58 0.20 280);
+  --ring: oklch(0.50 0.120 256);
 
-  /* Funnel ramp - SINGLE-hue (280) lightness scale, queued(light)->clicked(dark).
-     "converted" terminal uses --primary; --destructive is pulled out to failures. */
-  --chart-1: oklch(0.82 0.060 280);
-  --chart-2: oklch(0.75 0.090 280);
-  --chart-3: oklch(0.69 0.120 280);
-  --chart-4: oklch(0.63 0.150 280);
-  --chart-5: oklch(0.585 0.185 280);
+  /* Funnel ramp - SINGLE-hue blue lightness scale, queued(ice)->clicked(steel).
+     "converted" terminal uses --primary (deepest blue); --destructive is pulled
+     out to the failure breakdown. Mirrors the glacier blues in the palette. */
+  --chart-1: oklch(0.85 0.045 245);
+  --chart-2: oklch(0.77 0.065 250);
+  --chart-3: oklch(0.70 0.085 254);
+  --chart-4: oklch(0.63 0.100 256);
+  --chart-5: oklch(0.57 0.115 256);
 
   /* Semantic - subtle bg / readable fg / defined border (wired to funnel states) */
   --success: oklch(0.962 0.040 150);
@@ -138,12 +141,14 @@
   --vip-foreground: oklch(0.520 0.190 308);
   --vip-border: oklch(0.880 0.075 312);
 
-  /* AI surface = the accent, subtle. Anything AI-generated wears this, so AI
-     blocks read as one system with the primary action color. */
-  --ai: oklch(0.95 0.040 280);
-  --ai-foreground: oklch(0.520 0.210 280);
-  --ai-border: oklch(0.880 0.055 280);
-  --ai-accent: oklch(0.58 0.20 280);
+  /* AI surface = WARM BLUSH (the palette's pink). Anything AI-generated wears this
+     so it reads warm against the cold blue data - the explainability signal in color.
+     --ai-accent is a LIGHT blush, so its text token is dark navy, not white. */
+  --ai: oklch(0.94 0.030 28);
+  --ai-foreground: oklch(0.450 0.110 25);
+  --ai-border: oklch(0.880 0.045 28);
+  --ai-accent: oklch(0.86 0.060 28);
+  --ai-accent-foreground: oklch(0.30 0.060 262);
 
   /* Elevation surfaces - chrome (1) < data cards (2) < overlays/AI (3).
      surface-1 carries a faint cool tint so white data cards lift off it. */
@@ -154,23 +159,23 @@
   --radius: 0.75rem;
   --sidebar: oklch(0.985 0.003 250);
   --sidebar-foreground: oklch(0.21 0.01 250);
-  --sidebar-primary: oklch(0.58 0.20 280);
+  --sidebar-primary: oklch(0.50 0.120 256);
   --sidebar-primary-foreground: oklch(0.99 0.002 250);
   --sidebar-accent: oklch(0.97 0.004 250);
   --sidebar-accent-foreground: oklch(0.21 0.01 250);
   --sidebar-border: oklch(0.92 0.006 250);
-  --sidebar-ring: oklch(0.58 0.20 280);
+  --sidebar-ring: oklch(0.50 0.120 256);
 }
 
 .dark {
-  /* Dark: invert lightness, keep cool 250 hue + violet 280 accent identity. */
+  /* Dark: invert lightness, keep cool 250 neutrals + blue 256 accent identity. */
   --background: oklch(0.18 0.008 250);
   --foreground: oklch(0.96 0.003 250);
   --card: oklch(0.215 0.010 250);
   --card-foreground: oklch(0.96 0.003 250);
   --popover: oklch(0.215 0.010 250);
   --popover-foreground: oklch(0.96 0.003 250);
-  --primary: oklch(0.66 0.170 280);
+  --primary: oklch(0.66 0.130 256);   /* brighter steel blue for dark bg */
   --primary-foreground: oklch(0.18 0.008 250);
   --secondary: oklch(0.26 0.012 250);
   --secondary-foreground: oklch(0.96 0.003 250);
@@ -181,14 +186,14 @@
   --destructive: oklch(0.62 0.200 25);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.66 0.170 280);
+  --ring: oklch(0.66 0.130 256);
 
-  /* Funnel ramp - single-hue 280, brightens queued->clicked for dark bg. */
-  --chart-1: oklch(0.50 0.090 280);
-  --chart-2: oklch(0.57 0.120 280);
-  --chart-3: oklch(0.64 0.140 280);
-  --chart-4: oklch(0.70 0.160 280);
-  --chart-5: oklch(0.66 0.180 280);
+  /* Funnel ramp - single-hue blue, brightens queued->clicked for dark bg. */
+  --chart-1: oklch(0.50 0.080 250);
+  --chart-2: oklch(0.57 0.095 254);
+  --chart-3: oklch(0.64 0.110 256);
+  --chart-4: oklch(0.71 0.120 256);
+  --chart-5: oklch(0.66 0.130 256);
 
   --success: oklch(0.270 0.050 152);
   --success-foreground: oklch(0.800 0.140 152);
@@ -207,10 +212,11 @@
   --vip-foreground: oklch(0.820 0.140 308);
   --vip-border: oklch(0.430 0.085 308);
 
-  --ai: oklch(0.255 0.030 280);
-  --ai-foreground: oklch(0.800 0.120 280);
-  --ai-border: oklch(0.400 0.070 280);
-  --ai-accent: oklch(0.660 0.170 280);
+  --ai: oklch(0.265 0.040 22);
+  --ai-foreground: oklch(0.840 0.075 28);
+  --ai-border: oklch(0.420 0.070 24);
+  --ai-accent: oklch(0.800 0.085 26);
+  --ai-accent-foreground: oklch(0.25 0.050 262);
 
   --surface-1: oklch(0.165 0.008 250);
   --surface-2: oklch(0.215 0.010 250);
@@ -218,12 +224,12 @@
 
   --sidebar: oklch(0.215 0.010 250);
   --sidebar-foreground: oklch(0.96 0.003 250);
-  --sidebar-primary: oklch(0.66 0.170 280);
+  --sidebar-primary: oklch(0.66 0.130 256);
   --sidebar-primary-foreground: oklch(0.18 0.008 250);
   --sidebar-accent: oklch(0.26 0.012 250);
   --sidebar-accent-foreground: oklch(0.96 0.003 250);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.66 0.170 280);
+  --sidebar-ring: oklch(0.66 0.130 256);
 }
 
 @layer base {

@@ -58,7 +58,7 @@ export default function DashboardPage() {
           <>
             {/* ── KPI row - real aggregates from the live customer list ── */}
             {/* Gradient hero band - states the product thesis up top */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[oklch(0.38_0.14_264)] to-[oklch(0.52_0.16_288)] p-6 text-white shadow-raised">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-foreground p-6 text-white shadow-raised">
               <div className="relative z-10 max-w-xl">
                 <p className="text-sm font-medium opacity-80">Welcome back</p>
                 <h2 className="mt-1 text-xl font-semibold leading-snug">

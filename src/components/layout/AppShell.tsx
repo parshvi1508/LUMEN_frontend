@@ -120,7 +120,7 @@ function BrandMark() {
       className="flex items-center gap-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
       aria-label="Lumen CRM - go to dashboard"
     >
-      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-[oklch(0.50_0.16_264)] to-[oklch(0.34_0.14_268)] shadow-sm">
+      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-foreground shadow-sm">
         <Zap className="size-4 text-white" aria-hidden />
       </div>
       <span className="text-sm font-semibold text-foreground tracking-tight">
