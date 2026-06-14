@@ -77,6 +77,7 @@ export function AppShell({ children }: AppShellProps) {
                 </Drawer.Close>
               </div>
               <NavList onNavigate={() => setMobileOpen(false)} />
+              <SidebarFooter />
             </Drawer.Popup>
           </Drawer.Portal>
         </Drawer.Root>
@@ -116,8 +117,8 @@ function BrandMark() {
       className="flex items-center gap-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
       aria-label="Lumen CRM - go to dashboard"
     >
-      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-[oklch(0.52_0.2_312)] shadow-sm">
-        <Zap className="size-4 text-primary-foreground" aria-hidden />
+      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-[oklch(0.28_0_0)] to-[oklch(0.10_0_0)] shadow-sm">
+        <Zap className="size-4 text-white" aria-hidden />
       </div>
       <span className="text-sm font-semibold text-foreground tracking-tight">
         Lumen
