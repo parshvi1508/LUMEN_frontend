@@ -16,7 +16,7 @@ import { TierBadge } from "./TierBadge";
 import { ActionComingSoon, type ComingSoonAction } from "./ActionComingSoon";
 import type { Customer } from "@/lib/schemas/customer";
 import type { ApiError } from "@/lib/api";
-import { deriveTier, TIER_META } from "@/lib/customer-tier";
+import { deriveTier, TIER_META, type CustomerTier } from "@/lib/customer-tier";
 import { exportCustomersCsv } from "@/lib/csv-export";
 import { Upload, Users, Search, Wand2, Download, Mail, X } from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -47,6 +47,7 @@ export function CustomerTable({ onUploadClick, onRowClick }: CustomerTableProps)
     pageSize: PAGE_SIZE,
   });
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [tierFilter, setTierFilter] = useState<Set<CustomerTier>>(new Set());
   const [comingSoon, setComingSoon] = useState<{ action: ComingSoonAction; count: number } | null>(null);
 
   const debouncedSearch = useDebounce(searchInput, 400);
@@ -82,7 +83,31 @@ export function CustomerTable({ onUploadClick, onRowClick }: CustomerTableProps)
   }, []);
 
   const rows = useMemo(() => data?.data ?? [], [data]);
-  const selectedCustomers = rows.filter((c) => rowSelection[c.id]);
+
+  // Per-tier counts within the loaded page (client-side; tier is derived, not stored).
+  const tierCounts = useMemo(() => {
+    const c: Record<CustomerTier, number> = { vip: 0, active: 0, "at-risk": 0, churned: 0 };
+    for (const cust of rows) c[deriveTier(cust)]++;
+    return c;
+  }, [rows]);
+
+  // Tier filter refines only the rows already on this page (backend paginates).
+  const displayRows = useMemo(
+    () => (tierFilter.size === 0 ? rows : rows.filter((c) => tierFilter.has(deriveTier(c)))),
+    [rows, tierFilter],
+  );
+
+  const toggleTier = useCallback((tier: CustomerTier) => {
+    setTierFilter((prev) => {
+      const next = new Set(prev);
+      if (next.has(tier)) next.delete(tier);
+      else next.add(tier);
+      return next;
+    });
+    setRowSelection({});
+  }, []);
+
+  const selectedCustomers = displayRows.filter((c) => rowSelection[c.id]);
 
   const handleRowAction = useCallback(
     (c: Customer, action: "segment" | "export" | "email") => {
@@ -152,14 +177,20 @@ export function CustomerTable({ onUploadClick, onRowClick }: CustomerTableProps)
     <div className="space-y-4">
       <TableToolbar value={searchInput} onChange={handleSearch} onUploadClick={onUploadClick} />
 
-      {/* Tier legend - teaches the color system at a glance */}
-      {!isLoading && (data?.total ?? 0) > 0 && <TierLegend />}
+      {/* Tier filter - teaches the color system AND filters the loaded page */}
+      {!isLoading && (data?.total ?? 0) > 0 && (
+        <TierFilter active={tierFilter} counts={tierCounts} onToggle={toggleTier} />
+      )}
 
       <DataTable
         columns={columns}
-        data={rows}
+        data={displayRows}
         isLoading={isLoading}
-        emptyState={emptyContent()}
+        emptyState={
+          tierFilter.size > 0 && displayRows.length === 0
+            ? <EmptyState icon={<Search className="size-6" />} title="None on this page" description="No customers of the selected tier on this page. Clear the filter or change page." />
+            : emptyContent()
+        }
         onRowClick={onRowClick}
         sorting={sorting}
         onSortingChange={setSorting}
@@ -242,15 +273,41 @@ function BarButton({
   );
 }
 
-function TierLegend() {
+function TierFilter({
+  active,
+  counts,
+  onToggle,
+}: {
+  active: Set<CustomerTier>;
+  counts: Record<CustomerTier, number>;
+  onToggle: (tier: CustomerTier) => void;
+}) {
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-1">
-      {(["vip", "active", "at-risk", "churned"] as const).map((tier) => (
-        <div key={tier} className="flex items-center gap-1.5">
-          <TierBadge tier={tier} />
-          <span className="text-xs text-muted-foreground">{TIER_META[tier].description}</span>
-        </div>
-      ))}
+    <div className="flex flex-wrap items-center gap-2 px-1">
+      {(["vip", "active", "at-risk", "churned"] as const).map((tier) => {
+        const on = active.has(tier);
+        return (
+          <button
+            key={tier}
+            type="button"
+            onClick={() => onToggle(tier)}
+            aria-pressed={on}
+            title={TIER_META[tier].description}
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring",
+              on
+                ? "border-primary bg-primary/10 text-primary"
+                : "border-border bg-surface-2 text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
+          >
+            <TierBadge tier={tier} />
+            <span className="tabular-nums">{counts[tier]}</span>
+          </button>
+        );
+      })}
+      <span className="ml-1 text-[11px] text-muted-foreground">
+        {active.size > 0 ? "filtering this page" : "filter this page by tier"}
+      </span>
     </div>
   );
 }

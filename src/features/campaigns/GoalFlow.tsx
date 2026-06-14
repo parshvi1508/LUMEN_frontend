@@ -7,7 +7,6 @@ import {
   Lock,
   ShieldCheck,
   Users,
-  Send,
   CheckCircle2,
   ArrowRight,
   Layers,
@@ -18,7 +17,13 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { isApiError } from "@/lib/api";
 import { useProposeCampaign } from "@/hooks/useAi";
-import { getCampaign, createCampaign, dispatchCampaign } from "@/lib/api/campaigns";
+import {
+  getCampaign,
+  createCampaign,
+  dispatchCampaign,
+  approveCampaign,
+  executeCampaign,
+} from "@/lib/api/campaigns";
 import type { Channel } from "@/lib/schemas/types";
 import { ChannelPicker } from "./ChannelPicker";
 import { VariantCard } from "./VariantCard";
@@ -67,15 +72,33 @@ export function GoalFlow() {
     }
   }
 
-  // Approve = create a campaign from the (edited) proposal, then dispatch.
-  // We deliberately rebuild via /campaigns + /dispatch so the edits are honored;
-  // the backend approve/execute endpoints take no body and would ship the
-  // original proposal unchanged. See summary note.
+  // Has the human changed the AI's proposal? The backend approve/execute
+  // endpoints take no body, so they can only ship the proposal as-proposed.
+  const edited =
+    !!proposal &&
+    (channel !== (proposal.recommended_channel as Channel) ||
+      selectedIdx !== 0 ||
+      message.trim() !== (proposal.variants[0]?.message ?? "").trim());
+
+  // Approve path forks on whether the proposal was edited:
+  //  - unchanged -> run the backend's real proposal lifecycle (/approve then
+  //    /execute) on the existing proposal campaign: no orphan row, true agentic
+  //    "execute end to end".
+  //  - edited -> rebuild via /campaigns + /dispatch so the human's edits ship
+  //    (approve/execute can't carry a body). Conscious tradeoff: leaves the
+  //    original proposal campaign unused.
   async function onApprove() {
     if (!proposal) return;
     setApproveErr(null);
     setPhase("working");
     try {
+      if (!edited) {
+        await approveCampaign(proposal.campaign_id);
+        const executed = await executeCampaign(proposal.campaign_id);
+        setResultId(executed.id);
+        setPhase("done");
+        return;
+      }
       const proposalCampaign = await getCampaign(proposal.campaign_id);
       if (!proposalCampaign.segment_id) {
         throw new Error("Proposal is missing its segment.");
@@ -282,11 +305,16 @@ export function GoalFlow() {
             <div className="mb-3 flex items-start gap-2">
               <Lock className="mt-0.5 size-4 shrink-0 text-ai-foreground" aria-hidden />
               <p className="text-xs text-muted-foreground">
-                Everything above is a proposal. Approving creates the campaign and{" "}
+                Everything above is a proposal. Approving{" "}
                 <span className="font-medium text-foreground">
                   immediately dispatches
                 </span>{" "}
-                to {(proposal.audience_size ?? 0).toLocaleString("en-IN")} customers.
+                to {(proposal.audience_size ?? 0).toLocaleString("en-IN")} customers
+                {edited ? (
+                  <> — <span className="font-medium text-foreground">with your edits</span>.</>
+                ) : (
+                  <> — running the agent&apos;s proposal <span className="font-medium text-foreground">as-is</span>.</>
+                )}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">

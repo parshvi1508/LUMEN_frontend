@@ -94,6 +94,15 @@ export default function LoginPage() {
     <main className="grid min-h-screen lg:grid-cols-2">
       {/* ── Left: value prop + product preview ── */}
       <section className="relative hidden flex-col justify-between overflow-hidden bg-surface-1 p-10 lg:flex xl:p-14">
+        {/* Sunrise backdrop - layered gradient evoking the arctic-dawn palette
+            (blush peaks fading to ice-blue). To use a real photo instead: add
+            bg-[url('/sunrise.jpg')] bg-cover bg-center on this div and raise the
+            scrim opacity below so the dark text stays legible. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ai/55 via-surface-1 to-primary/10"
+        />
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-surface-1/35" />
         {/* ambient glow */}
         <div
           aria-hidden

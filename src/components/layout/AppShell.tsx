@@ -120,8 +120,8 @@ function BrandMark() {
       className="flex items-center gap-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
       aria-label="Lumen CRM - go to dashboard"
     >
-      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-foreground shadow-sm">
-        <Zap className="size-4 text-white" aria-hidden />
+      <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary to-ai-accent shadow-sm ring-1 ring-primary/20">
+        <Zap className="size-4 text-white drop-shadow-sm" aria-hidden />
       </div>
       <span className="text-sm font-semibold text-foreground tracking-tight">
         Lumen
@@ -178,7 +178,7 @@ function SidebarFooter() {
         <MenuPrimitive.Trigger className="flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
           <span
             aria-hidden
-            className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary select-none"
+            className="flex size-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 to-ai-accent/25 text-xs font-semibold text-primary ring-1 ring-primary/15 select-none"
           >
             {initials}
           </span>
