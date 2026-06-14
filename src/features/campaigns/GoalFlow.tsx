@@ -17,13 +17,9 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { isApiError } from "@/lib/api";
 import { useProposeCampaign } from "@/hooks/useAi";
-import {
-  getCampaign,
-  createCampaign,
-  dispatchCampaign,
-  approveCampaign,
-  executeCampaign,
-} from "@/lib/api/campaigns";
+import { createCampaign, dispatchCampaign } from "@/lib/api/campaigns";
+import { createSegment } from "@/lib/api/segments";
+import type { RuleGroup } from "@/lib/schemas/segment";
 import type { Channel } from "@/lib/schemas/types";
 import { ChannelPicker } from "./ChannelPicker";
 import { VariantCard } from "./VariantCard";
@@ -80,32 +76,23 @@ export function GoalFlow() {
       selectedIdx !== 0 ||
       message.trim() !== (proposal.variants[0]?.message ?? "").trim());
 
-  // Approve path forks on whether the proposal was edited:
-  //  - unchanged -> run the backend's real proposal lifecycle (/approve then
-  //    /execute) on the existing proposal campaign: no orphan row, true agentic
-  //    "execute end to end".
-  //  - edited -> rebuild via /campaigns + /dispatch so the human's edits ship
-  //    (approve/execute can't carry a body). Conscious tradeoff: leaves the
-  //    original proposal campaign unused.
+  // Persist on approval ONLY: create exactly one segment + one campaign from the
+  // (possibly edited) proposal, then dispatch. Proposing writes nothing, so
+  // browsing proposals never pollutes the segment or campaign lists.
   async function onApprove() {
     if (!proposal) return;
     setApproveErr(null);
     setPhase("working");
     try {
-      if (!edited) {
-        await approveCampaign(proposal.campaign_id);
-        const executed = await executeCampaign(proposal.campaign_id);
-        setResultId(executed.id);
-        setPhase("done");
-        return;
-      }
-      const proposalCampaign = await getCampaign(proposal.campaign_id);
-      if (!proposalCampaign.segment_id) {
-        throw new Error("Proposal is missing its segment.");
-      }
+      const segment = await createSegment({
+        name: name.trim() || `Proposed: ${goal.trim().slice(0, 50)}`,
+        definition: proposal.segment_definition as unknown as RuleGroup,
+        source: "ai",
+        ai_rationale: proposal.segment_rationale,
+      });
       const created = await createCampaign({
         name: name.trim() || "Proposed campaign",
-        segment_id: proposalCampaign.segment_id,
+        segment_id: segment.id,
         channel,
         message_template: message,
       });
@@ -311,9 +298,9 @@ export function GoalFlow() {
                 </span>{" "}
                 to {(proposal.audience_size ?? 0).toLocaleString("en-IN")} customers
                 {edited ? (
-                  <> — <span className="font-medium text-foreground">with your edits</span>.</>
+                  <> - <span className="font-medium text-foreground">with your edits</span>.</>
                 ) : (
-                  <> — running the agent&apos;s proposal <span className="font-medium text-foreground">as-is</span>.</>
+                  <> - running the agent&apos;s proposal <span className="font-medium text-foreground">as-is</span>.</>
                 )}
               </p>
             </div>
