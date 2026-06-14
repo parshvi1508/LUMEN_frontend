@@ -93,7 +93,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0); /* graphite - monochrome accent */
+  --primary: oklch(0.450 0.160 264); /* deep navy-indigo accent */
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -104,7 +104,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.928 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.205 0 0);
+  --ring: oklch(0.450 0.160 264);
 
   /* Multi-hue chart palette - magenta, amber, teal, blue, violet */
   --chart-1: oklch(0.600 0.215 285);
@@ -134,10 +134,10 @@
 
   /* AI surface - cool indigo-violet wash, unified with the primary accent so AI
      blocks read as one system, not a separate amber theme */
-  --ai: oklch(0.965 0 0);
-  --ai-foreground: oklch(0.320 0 0);
-  --ai-border: oklch(0.900 0 0);
-  --ai-accent: oklch(0.320 0 0);
+  --ai: oklch(0.985 0.020 82);
+  --ai-foreground: oklch(0.470 0.105 58);
+  --ai-border: oklch(0.870 0.080 75);
+  --ai-accent: oklch(0.780 0.150 68);
 
   /* Elevation surfaces - chrome (1) < data cards (2) < overlays/AI (3).
      surface-1 carries a faint cool tint so white data cards lift off it. */
@@ -148,7 +148,7 @@
   --radius: 0.75rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary: oklch(0.450 0.160 264);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
@@ -199,10 +199,10 @@
   --vip-foreground: oklch(0.820 0.140 308);
   --vip-border: oklch(0.430 0.085 308);
 
-  --ai: oklch(0.250 0 0);
-  --ai-foreground: oklch(0.870 0 0);
-  --ai-border: oklch(0.380 0 0);
-  --ai-accent: oklch(0.870 0 0);
+  --ai: oklch(0.235 0.030 70);
+  --ai-foreground: oklch(0.860 0.110 78);
+  --ai-border: oklch(0.430 0.080 70);
+  --ai-accent: oklch(0.800 0.150 70);
 
   --surface-1: oklch(0.165 0 0);
   --surface-2: oklch(0.205 0 0);

@@ -44,7 +44,7 @@ export const TIER_META: Record<CustomerTier, TierMeta> = {
     label: "At-risk",
     badge: "bg-warning text-warning-foreground border-warning-border",
     rail: "bg-warning-foreground",
-    description: `No order in ${AT_RISK_DAYS}–${CHURNED_DAYS} days`,
+    description: `No order in ${AT_RISK_DAYS}-${CHURNED_DAYS} days`,
   },
   churned: {
     label: "Churned",
