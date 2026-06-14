@@ -9,7 +9,7 @@ export default function CampaignsPage() {
       icon={<Megaphone className="size-6" aria-hidden />}
       pitch={
         <>
-          Go from a segment to a dispatched campaign — AI drafts the message variants, you approve,
+          Go from a segment to a dispatched campaign - AI drafts the message variants, you approve,
           and nothing sends without your sign-off.
         </>
       }
@@ -17,7 +17,7 @@ export default function CampaignsPage() {
         {
           icon: <Sparkles className="size-4" aria-hidden />,
           title: "AI message drafts",
-          body: "Three variants per channel — WhatsApp, SMS, email — each with its reasoning.",
+          body: "Three variants per channel - WhatsApp, SMS, email - each with its reasoning.",
         },
         {
           icon: <GitBranch className="size-4" aria-hidden />,

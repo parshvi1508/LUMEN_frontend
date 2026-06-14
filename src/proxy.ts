@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 // Public routes that do not require authentication.
 // NOTE: app routes (/dashboard, /customers, /segments, /campaigns) are NOT here
-// on purpose — they must be gated. "/" is matched exactly (every path startsWith
+// on purpose - they must be gated. "/" is matched exactly (every path startsWith
 // "/", so it can't be a prefix) and "/auth" covers the OAuth callback.
 const PUBLIC_PREFIXES = ["/login", "/auth"];
 

@@ -18,7 +18,7 @@ interface StatePanelProps<T> {
   "aria-label"?: string;
   // Wrap in aria-live="polite" for polling surfaces (e.g. CampaignFunnel)
   liveRegion?: boolean;
-  // For error retry — caller supplies this when status === "error"
+  // For error retry - caller supplies this when status === "error"
   onRetry?: () => void;
 }
 
@@ -88,7 +88,7 @@ export function StatePanel<T>({
           : null;
       break;
     case "success":
-      // data is guaranteed non-null at success — spec §3.2
+      // data is guaranteed non-null at success - spec §3.2
       if (data == null) return null;
       content = children(data);
       break;

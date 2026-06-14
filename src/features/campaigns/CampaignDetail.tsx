@@ -89,7 +89,7 @@ export function CampaignDetail({ id }: { id: string }) {
         title={campaign.data?.name ?? "Campaign"}
         description={
           campaign.data
-            ? `${campaign.data.channel ?? "—"} · created ${new Date(
+            ? `${campaign.data.channel ?? "-"} · created ${new Date(
                 campaign.data.created_at,
               ).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
             : undefined
@@ -180,7 +180,7 @@ export function CampaignDetail({ id }: { id: string }) {
               </h2>
               <div className="grid gap-4 md:grid-cols-2">
                 <FunnelChart rows={rows} />
-                {/* the raw numbers behind the chart — checkable */}
+                {/* the raw numbers behind the chart - checkable */}
                 <ul className="space-y-1.5">
                   {rows.map((r) => {
                     const pct = total ? (r.reach / total) * 100 : 0;
@@ -223,7 +223,7 @@ export function CampaignDetail({ id }: { id: string }) {
               </h2>
               {failed === 0 ? (
                 <p className="text-sm text-muted-foreground">
-                  No failures — all {total.toLocaleString("en-IN")} messages were
+                  No failures - all {total.toLocaleString("en-IN")} messages were
                   accepted by the channel.
                 </p>
               ) : (

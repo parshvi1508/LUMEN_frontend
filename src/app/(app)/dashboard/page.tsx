@@ -32,7 +32,7 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description="Your customer base at a glance — and the one move worth making next."
+        description="Your customer base at a glance - and the one move worth making next."
         actions={
           <Link
             href="/customers"
@@ -56,7 +56,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <>
-            {/* ── KPI row — real aggregates from the live customer list ── */}
+            {/* ── KPI row - real aggregates from the live customer list ── */}
             <Stagger
               aria-label="Key metrics"
               role="group"
@@ -109,7 +109,7 @@ export default function DashboardPage() {
               </StaggerItem>
             </Stagger>
 
-            {/* ── AI insight — the one-click next move ── */}
+            {/* ── AI insight - the one-click next move ── */}
             {isError ? (
               <div
                 role="alert"

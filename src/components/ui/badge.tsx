@@ -19,7 +19,7 @@ const badgeVariants = cva(
         ghost:
           "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
         link: "text-primary underline-offset-4 hover:underline",
-        // Semantic — built on the token layer (globals.css)
+        // Semantic - built on the token layer (globals.css)
         success: "bg-success text-success-foreground border-success-border",
         warning: "bg-warning text-warning-foreground border-warning-border",
         info: "bg-info text-info-foreground border-info-border",

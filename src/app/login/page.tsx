@@ -34,7 +34,7 @@ const PROOF = [
   {
     icon: Wand2,
     title: "Segments in one click",
-    body: "Turn “who hasn't ordered in 60 days?” into a live audience — no SQL.",
+    body: "Turn “who hasn't ordered in 60 days?” into a live audience - no SQL.",
   },
   {
     icon: ShieldCheck,
@@ -117,10 +117,10 @@ export default function LoginPage() {
             AI-native marketing CRM for D2C
           </div>
           <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-foreground xl:text-4xl">
-            From customer list to approved campaign — without code, SQL, or guesswork.
+            From customer list to approved campaign - without code, SQL, or guesswork.
           </h1>
 
-          {/* Product preview — a real slice of the dashboard's visual system */}
+          {/* Product preview - a real slice of the dashboard's visual system */}
           <DashboardPreview />
 
           <ul className="mt-8 space-y-4">
@@ -139,7 +139,7 @@ export default function LoginPage() {
         </div>
 
         <p className="relative text-xs text-muted-foreground">
-          Trusted with your customer data — read-only until you say otherwise.
+          Trusted with your customer data - read-only until you say otherwise.
         </p>
       </section>
 
@@ -216,7 +216,7 @@ function DashboardPreview() {
           <Sparkles className="size-3" />
         </span>
         <p className="text-[11px] leading-tight text-foreground">
-          <span className="font-semibold">142 customers</span> haven&apos;t ordered in 60 days —
+          <span className="font-semibold">142 customers</span> haven&apos;t ordered in 60 days -
           <span className="font-medium text-ai-foreground"> create a win-back segment</span>
         </p>
       </div>

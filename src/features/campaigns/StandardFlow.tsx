@@ -92,7 +92,7 @@ export function StandardFlow() {
         <Field label="Target segment">
           <SegmentPicker value={segmentId} onChange={setSegmentId} />
         </Field>
-        <Field label="Campaign intent" hint="What you want this campaign to achieve — the AI uses it to draft copy.">
+        <Field label="Campaign intent" hint="What you want this campaign to achieve - the AI uses it to draft copy.">
           <textarea
             rows={2}
             value={intent}
@@ -127,7 +127,7 @@ export function StandardFlow() {
 
       {/* 2 · variants */}
       {draft.data && (
-        <Section step={2} title="Pick a draft" subtitle="Each variant ships with the AI's reasoning. Select one to use as your starting point — you can edit it.">
+        <Section step={2} title="Pick a draft" subtitle="Each variant ships with the AI's reasoning. Select one to use as your starting point - you can edit it.">
           <div className="grid gap-2.5 md:grid-cols-3">
             {draft.data.variants.map((v, i) => (
               <VariantCard
@@ -178,7 +178,7 @@ export function StandardFlow() {
               </p>
             )}
             <p className="mt-2 text-[11px] text-muted-foreground">
-              Creating builds the campaign and renders a message per customer — but
+              Creating builds the campaign and renders a message per customer - but
               sends nothing until you dispatch.
             </p>
           </>
@@ -199,7 +199,7 @@ export function StandardFlow() {
             </div>
             {(created.audience_size ?? 0) === 0 ? (
               <p className="text-xs text-warning-foreground">
-                This segment has no customers — nothing would be sent. Adjust the
+                This segment has no customers - nothing would be sent. Adjust the
                 segment, then start over.
               </p>
             ) : (

@@ -1,4 +1,4 @@
-// Message token rendering — mirrors backend campaign_service.customer_fields/render_message.
+// Message token rendering - mirrors backend campaign_service.customer_fields/render_message.
 // Backend supports exactly these tokens; unknown tokens are left literal at render time.
 export const KNOWN_TOKENS = [
   "first_name",

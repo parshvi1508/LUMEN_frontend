@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// CSV row schema — validated client-side before upload (FRONTEND_SPEC §5.1)
+// CSV row schema - validated client-side before upload (FRONTEND_SPEC §5.1)
 export const CsvRowSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),

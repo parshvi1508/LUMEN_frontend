@@ -26,7 +26,7 @@ const TONE_ICON: Record<NonNullable<KpiCardProps["tone"]>, string> = {
 };
 
 /**
- * KPI card — data surface (surface-2 + shadow-card). On error shows an em-dash,
+ * KPI card - data surface (surface-2 + shadow-card). On error shows an em-dash,
  * never a crash (FRONTEND_SPEC §7).
  */
 export function KpiCard({
@@ -62,7 +62,7 @@ export function KpiCard({
         ) : (
           <p className="text-2xl font-semibold tabular-nums tracking-tight text-foreground">
             {isError ? (
-              "—"
+              "-"
             ) : countTo != null ? (
               <CountUp value={countTo} format={format} />
             ) : (

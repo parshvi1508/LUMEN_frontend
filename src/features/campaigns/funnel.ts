@@ -1,5 +1,5 @@
 // Funnel stage model. Ranks mirror backend receipt_service.STATUS_RANKS.
-// "failed" (rank 15) is NOT a funnel stage — it's a terminal branch shown
+// "failed" (rank 15) is NOT a funnel stage - it's a terminal branch shown
 // separately. Reach is cumulative by rank so it is monotonic and immune to
 // out-of-order / duplicate events: a "clicked" that arrives before "delivered"
 // still counts toward every lower stage via rank >=.

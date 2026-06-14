@@ -52,7 +52,7 @@ export function MessageEditorPreview({
           <span>
             Unknown token{unknown.length > 1 ? "s" : ""}{" "}
             <span className="font-mono">{unknown.map((t) => `{{${t}}}`).join(", ")}</span>{" "}
-            will be sent literally — only {KNOWN_TOKENS.map((t) => `{{${t}}}`).join(", ")} are
+            will be sent literally - only {KNOWN_TOKENS.map((t) => `{{${t}}}`).join(", ")} are
             substituted.
           </span>
         </p>
@@ -68,7 +68,7 @@ export function MessageEditorPreview({
           {value ? renderPreview(value) : "Your message preview shows here."}
         </p>
         <p className="mt-1.5 text-[11px] text-muted-foreground">
-          Sample values — each customer gets their own at send time.
+          Sample values - each customer gets their own at send time.
         </p>
       </div>
     </div>

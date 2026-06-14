@@ -5,7 +5,7 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AiInsightCardProps {
-  /** Plain-language callout — the headline a marketer can act on. */
+  /** Plain-language callout - the headline a marketer can act on. */
   headline: ReactNode;
   /** The grounded numbers the headline cites, shown beside it so the claim is checkable. */
   detail?: ReactNode;
@@ -18,7 +18,7 @@ interface AiInsightCardProps {
 /**
  * The AI surface vocabulary: amber wash, accent rail, sparkle provenance, and
  * the dedicated `shadow-ai` glow. Wherever this appears, the user knows
- * intelligence is speaking — and the reasoning (detail) sits next to the claim,
+ * intelligence is speaking - and the reasoning (detail) sits next to the claim,
  * never behind a tooltip (PRODUCT.md §1).
  */
 export function AiInsightCard({
@@ -36,7 +36,7 @@ export function AiInsightCard({
         className,
       )}
     >
-      {/* Accent rail — the amber doing functional work */}
+      {/* Accent rail - the amber doing functional work */}
       <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-ai-accent" />
 
       <div className="flex flex-col gap-4 p-5 pl-6 sm:flex-row sm:items-center sm:justify-between">

@@ -5,7 +5,7 @@
 import { motion, type Variants } from "framer-motion";
 import type { ComponentProps, ReactNode } from "react";
 
-const EASE = [0.16, 1, 0.3, 1] as const; // gentle ease-out, used everywhere
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]; // gentle ease-out
 
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 8 },

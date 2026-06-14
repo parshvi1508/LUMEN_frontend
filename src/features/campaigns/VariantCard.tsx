@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { MessageVariant } from "@/lib/schemas/ai";
 
-// Reasoning is shown prominently — it is the product thesis (explainable AI).
+// Reasoning is shown prominently - it is the product thesis (explainable AI).
 export function VariantCard({
   variant,
   selected,

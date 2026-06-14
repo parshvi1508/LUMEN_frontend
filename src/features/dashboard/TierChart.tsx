@@ -18,7 +18,7 @@ interface TierTooltipProps {
 
 // Tier → chart token (the redefined multi-hue palette doing functional work).
 const TIER_FILL: Record<CustomerTier, string> = {
-  vip: "var(--chart-5)", // violet — matches the VIP badge
+  vip: "var(--chart-5)", // violet - matches the VIP badge
   active: "var(--chart-3)", // teal/green
   "at-risk": "var(--chart-2)", // amber
   churned: "var(--muted-foreground)", // neutral, de-emphasized

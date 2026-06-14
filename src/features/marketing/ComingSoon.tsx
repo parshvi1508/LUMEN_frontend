@@ -21,7 +21,7 @@ interface ComingSoonProps {
 }
 
 /**
- * Honest "coming soon" landing — no fake data, no dead 404. Teases the real
+ * Honest "coming soon" landing - no fake data, no dead 404. Teases the real
  * roadmap and offers a notify affordance so a nav item always lands somewhere.
  */
 export function ComingSoon({ title, description, icon, pitch, features }: ComingSoonProps) {
@@ -102,7 +102,7 @@ function NotifyForm({ surface }: { surface: string }) {
         className="mt-4 inline-flex items-center gap-2 rounded-lg border border-success-border bg-success px-3.5 py-2.5 text-sm text-success-foreground"
       >
         <CheckCircle2 className="size-4 shrink-0" aria-hidden />
-        You&apos;re on the list — we&apos;ll email <span className="font-medium">{done}</span> when{" "}
+        You&apos;re on the list - we&apos;ll email <span className="font-medium">{done}</span> when{" "}
         {surface} ships.
       </div>
     );

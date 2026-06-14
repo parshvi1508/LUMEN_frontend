@@ -117,12 +117,12 @@ export function InsightPanel({
             </p>
             <p className="mt-3 flex items-center gap-1.5 text-[11px] text-muted-foreground">
               <ShieldCheck className="size-3.5 shrink-0" aria-hidden />
-              Grounded by construction — every figure above must appear in the facts,
+              Grounded by construction - every figure above must appear in the facts,
               so a hallucinated number is visible at a glance.
             </p>
           </div>
 
-          {/* cited facts — the raw numbers, beside the prose */}
+          {/* cited facts - the raw numbers, beside the prose */}
           <dl className="space-y-1 rounded-lg border border-border bg-surface-1 p-3">
             <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
               Cited facts

@@ -79,7 +79,7 @@ export async function apiFetch<T>(
     throw new ApiResponseError(apiError);
   }
 
-  // 204 No Content — return undefined cast to T
+  // 204 No Content - return undefined cast to T
   if (res.status === 204) return undefined as T;
 
   return res.json() as Promise<T>;

@@ -127,7 +127,7 @@ export function CsvUpload({ onClose }: CsvUploadProps) {
       setStage({
         id: "validation-error",
         fileName: file.name,
-        lines: [`File is ${(file.size / 1024 / 1024).toFixed(1)} MB — limit is 5 MB.`],
+        lines: [`File is ${(file.size / 1024 / 1024).toFixed(1)} MB - limit is 5 MB.`],
       });
       return;
     }
@@ -145,7 +145,7 @@ export function CsvUpload({ onClose }: CsvUploadProps) {
       setStage({
         id: "validation-error",
         fileName: file.name,
-        lines: ["Could not read the file — it may use an unsupported encoding (try saving as UTF-8)."],
+        lines: ["Could not read the file - it may use an unsupported encoding (try saving as UTF-8)."],
       });
       return;
     }
@@ -167,11 +167,11 @@ export function CsvUpload({ onClose }: CsvUploadProps) {
     const allRequiredMapped = FIELDS.filter((f) => f.required).every((f) => mapping[f.key]);
 
     if (allRequiredMapped) {
-      // Clean file — skip the mapping step entirely.
+      // Clean file - skip the mapping step entirely.
       const { validRows, rejected } = remapAndValidate(parsed.data, mapping);
       setStage({ id: "ready", fileName: file.name, validRows, rejected });
     } else {
-      // Don't cold-reject — let the user map their columns.
+      // Don't cold-reject - let the user map their columns.
       setStage({ id: "mapping", fileName: file.name, headers, rawRows: parsed.data, mapping });
     }
   }, []);
@@ -223,7 +223,7 @@ export function CsvUpload({ onClose }: CsvUploadProps) {
       clearInterval(tick);
       setStage({
         id: "error",
-        message: isApiError(err) ? err.apiError.message : "Upload failed — please try again.",
+        message: isApiError(err) ? err.apiError.message : "Upload failed - please try again.",
       });
     }
   }, [stage, mutation]);
@@ -348,7 +348,7 @@ function DropZone({
     <div className="space-y-3">
       <div
         role="button"
-        aria-label="Upload CSV — click or drag a file here"
+        aria-label="Upload CSV - click or drag a file here"
         tabIndex={0}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
@@ -391,7 +391,7 @@ function DropZone({
           </p>
         </div>
         <p className="text-xs text-muted-foreground">
-          Bring a Shopify or Klaviyo export — we&apos;ll help you map the columns.
+          Bring a Shopify or Klaviyo export - we&apos;ll help you map the columns.
         </p>
         <input
           ref={inputRef}
@@ -460,7 +460,7 @@ function MappingPanel({
               aria-label={`Column for ${field.label}`}
               className="h-8 flex-1 rounded-lg border border-border bg-surface-2 px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
             >
-              <option value="">{field.required ? "— select column —" : "— skip —"}</option>
+              <option value="">{field.required ? "- select column -" : "- skip -"}</option>
               {stage.headers.map((h) => (
                 <option key={h} value={h}>
                   {h}
@@ -601,7 +601,7 @@ function ReadyPanel({
             ))}
             {rejected.length > 6 && (
               <li className="px-4 py-2 text-xs text-muted-foreground">
-                +{rejected.length - 6} more — download CSV for the full list
+                +{rejected.length - 6} more - download CSV for the full list
               </li>
             )}
           </ul>
@@ -648,7 +648,7 @@ function UploadingPanel({ fileName, progress }: { fileName: string; progress: nu
       >
         <div className="h-full bg-primary rounded-full transition-all duration-300 ease-out" style={{ width: `${progress}%` }} />
       </div>
-      <p className="text-center text-xs text-muted-foreground">Uploading — this may take a moment</p>
+      <p className="text-center text-xs text-muted-foreground">Uploading - this may take a moment</p>
     </div>
   );
 }
