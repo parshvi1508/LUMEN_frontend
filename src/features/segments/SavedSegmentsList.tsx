@@ -1,12 +1,13 @@
 "use client";
 
-import { Plus, Layers } from "lucide-react";
+import { Plus, Layers, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import { staggerParent, fadeUp } from "@/components/motion/motion";
 import { StatePanel, type StatePanelStatus } from "@/components/ui/StatePanel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { useSegments } from "@/hooks/useSegments";
+import { useSegments, useDeleteSegment } from "@/hooks/useSegments";
 import { isApiError } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import type { SegmentOut } from "@/lib/schemas/segment";
@@ -21,6 +22,20 @@ export function SavedSegmentsList({
   onNew: () => void;
 }) {
   const query = useSegments();
+  const del = useDeleteSegment();
+
+  function onDelete(seg: SegmentOut) {
+    if (!window.confirm(`Delete segment "${seg.name}"? This cannot be undone.`)) {
+      return;
+    }
+    del.mutate(seg.id, {
+      onSuccess: () => {
+        toast.success(`Deleted "${seg.name}"`);
+        if (activeId === seg.id) onNew();
+      },
+      onError: () => toast.error("Couldn't delete the segment."),
+    });
+  }
 
   const status: StatePanelStatus = query.isLoading
     ? "loading"
@@ -78,34 +93,46 @@ export function SavedSegmentsList({
           >
             {segments.map((seg) => (
               <motion.li key={seg.id} variants={fadeUp}>
-                <button
-                  type="button"
-                  onClick={() => onLoad(seg)}
-                  aria-current={activeId === seg.id || undefined}
+                <div
                   className={cn(
-                    "w-full rounded-lg border px-2.5 py-2 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring",
+                    "group flex items-stretch gap-1 rounded-lg border px-1 transition-colors",
                     activeId === seg.id
                       ? "border-primary bg-primary/5"
                       : "border-border hover:bg-muted",
                   )}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="truncate text-sm font-medium text-foreground">
-                      {seg.name}
-                    </span>
-                    {seg.source === "ai" && (
-                      <Badge variant="ai" className="shrink-0">
-                        AI
-                      </Badge>
-                    )}
-                  </div>
-                  <p className="mt-0.5 text-[11px] text-muted-foreground">
-                    {new Date(seg.created_at).toLocaleDateString("en-IN", {
-                      day: "numeric",
-                      month: "short",
-                    })}
-                  </p>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => onLoad(seg)}
+                    aria-current={activeId === seg.id || undefined}
+                    className="min-w-0 flex-1 rounded-md px-1.5 py-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="truncate text-sm font-medium text-foreground">
+                        {seg.name}
+                      </span>
+                      {seg.source === "ai" && (
+                        <Badge variant="ai" className="shrink-0">
+                          AI
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="mt-0.5 text-[11px] text-muted-foreground">
+                      {new Date(seg.created_at).toLocaleDateString("en-IN", {
+                        day: "numeric",
+                        month: "short",
+                      })}
+                    </p>
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={`Delete segment ${seg.name}`}
+                    onClick={() => onDelete(seg)}
+                    className="shrink-0 self-center rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring group-hover:opacity-100"
+                  >
+                    <Trash2 className="size-3.5" aria-hidden />
+                  </button>
+                </div>
               </motion.li>
             ))}
           </motion.ul>

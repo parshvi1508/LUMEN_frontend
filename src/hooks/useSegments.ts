@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { qk } from "@/lib/query-keys";
 import {
   createSegment,
+  deleteSegment,
   getSegment,
   getSegments,
   previewSegment,
@@ -36,6 +37,16 @@ export function useCreateSegment() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: createSegment,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: qk.segments() });
+    },
+  });
+}
+
+export function useDeleteSegment() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: deleteSegment,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: qk.segments() });
     },

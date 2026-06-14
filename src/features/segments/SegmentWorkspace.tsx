@@ -139,7 +139,15 @@ export function SegmentWorkspace() {
         description="Build an audience with rules or plain English. Every rule shows its live reach, so you can see exactly who you're targeting before you save."
       />
 
-      <div className="grid grid-cols-1 gap-5 px-6 py-6 md:px-8 lg:grid-cols-[240px_minmax(0,1fr)_360px]">
+      <p className="mx-6 mt-6 rounded-lg border border-border bg-surface-1 px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground md:mx-8">
+        A <span className="font-medium text-foreground">segment</span> is a saved
+        group of customers. Describe one in plain English and the AI writes the
+        rules, or build them by hand. The{" "}
+        <span className="font-medium text-foreground">audience preview</span> on the
+        right shows exactly who is in, and each rule&apos;s reach, before you save.
+      </p>
+
+      <div className="grid grid-cols-1 gap-5 px-6 pb-6 pt-3 md:px-8 lg:grid-cols-[240px_minmax(0,1fr)_360px]">
         {/* ── saved segments ── */}
         <SavedSegmentsList
           activeId={activeId}

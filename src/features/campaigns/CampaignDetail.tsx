@@ -21,16 +21,7 @@ import { useCampaign, useCampaignStats } from "@/hooks/useCampaigns";
 import { computeReach } from "./funnel";
 import { FunnelChart } from "./FunnelChart";
 import { InsightPanel } from "./InsightPanel";
-
-const STATUS_BADGE: Record<
-  string,
-  "secondary" | "warning" | "info" | "success"
-> = {
-  draft: "secondary",
-  dispatching: "warning",
-  active: "info",
-  completed: "success",
-};
+import { CAMPAIGN_STATUS_VARIANT, campaignStatusLabel } from "./status";
 
 export function CampaignDetail({ id }: { id: string }) {
   const campaign = useCampaign(id);
@@ -97,7 +88,9 @@ export function CampaignDetail({ id }: { id: string }) {
         actions={
           status ? (
             <div className="flex items-center gap-2">
-              <Badge variant={STATUS_BADGE[status] ?? "secondary"}>{status}</Badge>
+              <Badge variant={CAMPAIGN_STATUS_VARIANT[status] ?? "secondary"}>
+                {campaignStatusLabel(status)}
+              </Badge>
               {polling ? (
                 <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
                   <span className="relative flex size-2">

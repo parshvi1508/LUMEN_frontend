@@ -2,27 +2,33 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Megaphone, Plus, Users, ArrowRight, Send } from "lucide-react";
+import { Megaphone, Plus, Users, ArrowRight, Send, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { StatePanel, type StatePanelStatus } from "@/components/ui/StatePanel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Stagger, StaggerItem } from "@/components/motion/motion";
-import { useCampaignsList } from "@/hooks/useCampaigns";
+import { useCampaignsList, useDeleteCampaign } from "@/hooks/useCampaigns";
 import { isApiError } from "@/lib/api";
 import type { CampaignOut } from "@/lib/schemas/campaign";
-
-const STATUS_BADGE: Record<string, "secondary" | "warning" | "info" | "success"> = {
-  draft: "secondary",
-  dispatching: "warning",
-  active: "info",
-  completed: "success",
-};
+import { CAMPAIGN_STATUS_VARIANT, campaignStatusLabel } from "./status";
 
 export function CampaignsHub() {
   const router = useRouter();
   const query = useCampaignsList();
+  const del = useDeleteCampaign();
+
+  function onDelete(e: React.MouseEvent, c: CampaignOut) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!window.confirm(`Delete campaign "${c.name}"? This cannot be undone.`)) return;
+    del.mutate(c.id, {
+      onSuccess: () => toast.success(`Deleted "${c.name}"`),
+      onError: () => toast.error("Couldn't delete the campaign."),
+    });
+  }
 
   const status: StatePanelStatus = query.isLoading
     ? "loading"
@@ -82,7 +88,7 @@ export function CampaignsHub() {
                 <StaggerItem key={c.id}>
                   <Link
                     href={`/campaigns/${c.id}`}
-                    className="flex items-center gap-4 rounded-xl border border-border bg-surface-1 px-4 py-3 transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+                    className="group flex items-center gap-4 rounded-xl border border-border bg-surface-1 px-4 py-3 transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
                   >
                     <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       <Send className="size-4" aria-hidden />
@@ -102,11 +108,17 @@ export function CampaignsHub() {
                       <Users className="size-3.5" aria-hidden />
                       {(c.audience_size ?? 0).toLocaleString("en-IN")}
                     </span>
-                    {c.status && (
-                      <Badge variant={STATUS_BADGE[c.status] ?? "secondary"}>
-                        {c.status}
-                      </Badge>
-                    )}
+                    <Badge variant={CAMPAIGN_STATUS_VARIANT[c.status ?? "draft"] ?? "secondary"}>
+                      {campaignStatusLabel(c.status)}
+                    </Badge>
+                    <button
+                      type="button"
+                      aria-label={`Delete campaign ${c.name}`}
+                      onClick={(e) => onDelete(e, c)}
+                      className="shrink-0 rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring group-hover:opacity-100"
+                    >
+                      <Trash2 className="size-3.5" aria-hidden />
+                    </button>
                     <ArrowRight className="size-4 shrink-0 text-muted-foreground" aria-hidden />
                   </Link>
                 </StaggerItem>

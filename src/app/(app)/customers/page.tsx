@@ -47,6 +47,13 @@ export default function CustomersPage() {
 
       {/* ── Table ── */}
       <div className="px-6 md:px-8 py-6">
+        <p className="mb-4 rounded-lg border border-border bg-surface-1 px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground">
+          This is your brand&apos;s shared customer book. Rows are colour-tagged by
+          tier (VIP, active, at-risk, churned). Search or sort to find people,
+          click a row for the full profile, or use{" "}
+          <span className="font-medium text-foreground">Import</span> to add
+          customers from a CSV.
+        </p>
         <Suspense fallback={<TableFallback />}>
           <CustomerTable
             onUploadClick={() => setUploadOpen(true)}
