@@ -34,7 +34,7 @@ const PROOF = [
   {
     icon: Wand2,
     title: "Segments in one click",
-    body: “Turn “who hasn’t ordered in 60 days?” into a live audience, no SQL.”,
+    body: "Turn \"who hasn't ordered in 60 days?\" into a live audience, no SQL.",
   },
   {
     icon: ShieldCheck,
