@@ -25,6 +25,7 @@ import { TierBadge } from "@/features/customers/TierBadge";
 import { useCustomerStats } from "@/hooks/useCustomerStats";
 import { deriveTier } from "@/lib/customer-tier";
 import { formatCurrency, formatRelativeTime } from "@/lib/format";
+import { BRAND } from "@/lib/brand";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -64,12 +65,12 @@ export default function DashboardPage() {
             {/* Gradient hero band - states the product thesis up top */}
             <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-ai-accent p-6 text-white shadow-raised">
               <div className="relative z-10 max-w-xl">
-                <p className="text-sm font-medium opacity-80">Welcome back</p>
+                <p className="text-sm font-medium opacity-80">Welcome back to {BRAND.name}</p>
                 <h2 className="mt-1 text-xl font-semibold leading-snug">
                   Decide who to reach and what to say, with the reasoning shown.
                 </h2>
                 <p className="mt-1.5 text-sm opacity-90">
-                  Three moves run this CRM. Pick one to start.
+                  {BRAND.sampleLabel}. Three moves run this CRM.
                 </p>
                 {/* 10-second orientation: the core actions, stated plainly. */}
                 <div className="mt-4 flex flex-wrap gap-2">

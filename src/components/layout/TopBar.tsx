@@ -39,26 +39,29 @@ export function TopBar() {
         </span>
       </nav>
 
-      {/* Global search - routes to the customer book */}
-      <form onSubmit={submitSearch} className="ml-auto w-full max-w-xs sm:ml-6" role="search">
-        <label htmlFor="global-search" className="sr-only">
-          Search customers
-        </label>
-        <div className="relative">
-          <Search
-            className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-            aria-hidden
-          />
-          <input
-            id="global-search"
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search customers…"
-            className="h-9 w-full rounded-lg border border-border bg-surface-2 pl-8 pr-3 text-sm shadow-card outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40"
-          />
-        </div>
-      </form>
+      {/* Global search - routes to the customer book (hidden on /customers which has its own) */}
+      {section !== "customers" && (
+        <form onSubmit={submitSearch} className="ml-auto w-full max-w-xs sm:ml-6" role="search">
+          <label htmlFor="global-search" className="sr-only">
+            Search customers
+          </label>
+          <div className="relative">
+            <Search
+              className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+              aria-hidden
+            />
+            <input
+              id="global-search"
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search customers…"
+              className="h-9 w-full rounded-lg border border-border bg-surface-2 pl-8 pr-3 text-sm shadow-card outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40"
+            />
+          </div>
+        </form>
+      )}
+      {section === "customers" && <div className="ml-auto" />}
 
       {/* Architecture - static system-thinking page for reviewers */}
       <Link
