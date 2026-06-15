@@ -18,7 +18,7 @@ import type { Customer } from "@/lib/schemas/customer";
 import type { ApiError } from "@/lib/api";
 import { deriveTier, TIER_META, type CustomerTier } from "@/lib/customer-tier";
 import { exportCustomersCsv } from "@/lib/csv-export";
-import { Upload, Users, Search, Wand2, Download, Mail, X } from "lucide-react";
+import { Users, Search, Wand2, Download, Mail, X } from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { cn } from "@/lib/utils";
 
@@ -161,7 +161,7 @@ export function CustomerTable({ onUploadClick, onRowClick }: CustomerTableProps)
     };
     return (
       <div className="space-y-4">
-        <TableToolbar value={searchInput} onChange={handleSearch} onUploadClick={onUploadClick} />
+        <TableToolbar value={searchInput} onChange={handleSearch} />
         <EmptyState
           title="Couldn't load customers"
           description={apiErr.message}
@@ -175,7 +175,7 @@ export function CustomerTable({ onUploadClick, onRowClick }: CustomerTableProps)
 
   return (
     <div className="space-y-4">
-      <TableToolbar value={searchInput} onChange={handleSearch} onUploadClick={onUploadClick} />
+      <TableToolbar value={searchInput} onChange={handleSearch} />
 
       {/* Tier filter - teaches the color system AND filters the loaded page */}
       {!isLoading && (data?.total ?? 0) > 0 && (
@@ -315,39 +315,24 @@ function TierFilter({
 function TableToolbar({
   value,
   onChange,
-  onUploadClick,
 }: {
   value: string;
   onChange: (v: string) => void;
-  onUploadClick: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="relative max-w-xs w-full">
-        <Search
-          className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none"
-          aria-hidden
-        />
-        <Input
-          type="search"
-          placeholder="Search customers…"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="pl-8"
-          aria-label="Search customers"
-        />
-      </div>
-      <button
-        type="button"
-        onClick={onUploadClick}
-        className={cn(
-          "inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm font-medium text-foreground shadow-card transition-colors",
-          "hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring",
-        )}
-      >
-        <Upload className="size-4" aria-hidden />
-        Upload CSV
-      </button>
+    <div className="relative max-w-xs w-full">
+      <Search
+        className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none"
+        aria-hidden
+      />
+      <Input
+        type="search"
+        placeholder="Search customers…"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="pl-8"
+        aria-label="Search customers"
+      />
     </div>
   );
 }
