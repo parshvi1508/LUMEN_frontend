@@ -48,3 +48,12 @@ export async function deleteCampaign(id: string): Promise<void> {
 export async function getCampaignStats(id: string): Promise<CampaignStats> {
   return apiGet<CampaignStats>(`/api/v1/campaigns/${id}/stats`);
 }
+
+// GET /api/v1/campaigns/{id}/pnl - profit and loss breakdown
+export async function getCampaignPnl(
+  id: string,
+): Promise<import("@/lib/api/insights").CampaignPnl> {
+  return apiGet<import("@/lib/api/insights").CampaignPnl>(
+    `/api/v1/campaigns/${id}/pnl`,
+  );
+}
