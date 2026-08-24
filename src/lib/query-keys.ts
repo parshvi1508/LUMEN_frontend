@@ -17,4 +17,10 @@ export const qk = {
     ["campaigns", id, "stats"] as const,
   campaignInsight: (id: string) =>
     ["campaigns", id, "insight"] as const,
+  campaignPnl: (id: string) =>
+    ["campaigns", id, "pnl"] as const,
+  portfolio: () =>
+    ["insights", "portfolio"] as const,
+  decisions: (tier?: string, limit?: number) =>
+    ["insights", "decisions", tier, limit] as const,
 } as const;

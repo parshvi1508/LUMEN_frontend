@@ -1,7 +1,8 @@
+// Data is the Brazilian Olist dataset, so money is Reais.
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-IN", {
+  return new Intl.NumberFormat("pt-BR", {
     style: "currency",
-    currency: "INR",
+    currency: "BRL",
     maximumFractionDigits: 0,
   }).format(amount);
 }
