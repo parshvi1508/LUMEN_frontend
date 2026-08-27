@@ -55,26 +55,26 @@ export default function Landing() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/dashboard"
+              href="/today"
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
             >
-              Open the revenue radar
+              See today's actions
               <ArrowRight className="size-4" aria-hidden />
             </Link>
             <Link
-              href="/login"
+              href="/dashboard"
               className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-3 text-sm font-medium hover:bg-muted"
             >
-              Sign in
+              Revenue radar
             </Link>
           </div>
         </div>
 
         <dl className="mt-14 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4">
-          <Stat value="95,420" label="customers scored" />
-          <Stat value="0.01" label="calibration Brier, from 0.21" />
-          <Stat value="SHAP" label="reason on every score" />
-          <Stat value="R$ P&L" label="real attributed revenue" />
+          <Stat value="96,095" label="customers scored" />
+          <Stat value="0.012" label="calibrated Brier score" />
+          <Stat value="SHAP + NLP" label="reasons from reviews and behavior" />
+          <Stat value="R$ P&L" label="real attributed revenue per campaign" />
         </dl>
       </section>
 
@@ -134,10 +134,10 @@ export default function Landing() {
             </p>
           </div>
           <Link
-            href="/dashboard"
+            href="/today"
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
-            Open the revenue radar
+            See today's actions
             <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
