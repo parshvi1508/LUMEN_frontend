@@ -51,7 +51,7 @@ const TRADEOFFS: {
     scale: "Swap provider or add SAML/SSO. Auth middleware is a single file.",
   },
   {
-    chose: "Groq (Llama 3.3 70B) with OpenRouter fallback",
+    chose: "Groq (Qwen 3.6 27B) with OpenRouter fallback",
     over: "Self-hosted HuggingFace model",
     because:
       "Sub-second latency, zero infra. Automatic fallback covers provider instability without user-facing errors.",
@@ -284,9 +284,9 @@ export default function ArchitecturePage() {
           <div className="mt-3 space-y-3 text-sm leading-relaxed text-foreground/90">
             <p>
               <span className="font-medium text-foreground">Status strip.</span>{" "}
-              The app footer shows live provider state: channel service connectivity
-              and AI provider (Groq primary, OpenRouter fallback). If Groq is down,
-              the strip reflects the fallback without user action.
+              The sidebar shows live provider state: channel service connectivity
+              and AI provider (Groq/Qwen primary, OpenRouter fallback). If the primary
+              is down, the strip reflects the fallback without user action.
             </p>
             <p>
               <span className="font-medium text-foreground">Campaign polling.</span>{" "}
@@ -320,8 +320,8 @@ export default function ArchitecturePage() {
               reason="Polling is stateless and deployable anywhere. Upgrade path documented."
             />
             <SkippedItem
-              label="Multi-tenancy"
-              reason="Single-brand deployment. Config object is the seam for future tenant isolation."
+              label="Full multi-tenancy UI"
+              reason="Backend is tenant-scoped. Frontend deploys per-brand. Tenant switcher is the seam for a hosted multi-tenant version."
             />
             <SkippedItem
               label="A/B testing engine"
