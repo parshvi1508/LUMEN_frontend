@@ -29,7 +29,7 @@ export function TopBar() {
   }
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-border bg-surface-1/80 px-4 backdrop-blur md:px-6">
+    <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-border bg-surface-1/80 pl-16 pr-4 backdrop-blur md:px-6">
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="hidden min-w-0 items-center gap-1.5 text-sm sm:flex">
         <span className="text-muted-foreground">Lumen</span>

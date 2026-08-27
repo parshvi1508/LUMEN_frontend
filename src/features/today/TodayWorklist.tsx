@@ -2,6 +2,22 @@
 
 import { useState } from "react";
 import { Target, Brain } from "lucide-react";
+
+const FEATURE_LABELS: Record<string, string> = {
+  recency_days: "Days since last order",
+  frequency: "Order frequency",
+  monetary_total: "Total spend",
+  monetary_avg: "Avg order value",
+  tenure_days: "Tenure",
+  avg_review: "Reviews",
+  avg_installments: "Installments",
+  avg_freight_ratio: "Shipping ratio",
+  avg_delivery_delay: "Delivery delay",
+  review_word_count: "Review detail",
+  review_text_ratio: "Review engagement",
+  review_topics: "Review topics",
+  payment_type: "Payment method",
+};
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDecisions } from "@/hooks/useDecisions";
 import { formatCurrency } from "@/lib/format";
@@ -57,7 +73,7 @@ export function TodayWorklist() {
             : (decisions.data ?? []).length === 0
               ? (
                 <li className="px-5 py-10 text-center text-sm text-muted-foreground">
-                  No scored customers yet. Run the ML pipeline first.
+                  No customers scored yet. Import your customer data on the Customers page, and Lumen will score them automatically.
                 </li>
               )
               : (decisions.data ?? []).map((d) => (
@@ -102,7 +118,7 @@ export function TodayWorklist() {
                                   : "bg-danger text-danger-foreground"
                               }`}
                             >
-                              {r.feature.replace(/_/g, " ")}
+                              {FEATURE_LABELS[r.feature] ?? r.feature.replace(/_/g, " ")}
                             </span>
                           ))}
                         </div>

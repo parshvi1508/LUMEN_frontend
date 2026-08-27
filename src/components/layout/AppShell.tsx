@@ -63,7 +63,7 @@ export function AppShell({ children }: AppShellProps) {
           aria-label="Open navigation menu"
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen(true)}
-          className="fixed left-4 top-4 z-30 flex size-9 items-center justify-center rounded-lg border border-border bg-background shadow-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+          className="fixed left-4 top-4 z-30 flex size-11 items-center justify-center rounded-lg border border-border bg-background shadow-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
         >
           <Menu className="size-4" aria-hidden />
         </button>
@@ -77,7 +77,7 @@ export function AppShell({ children }: AppShellProps) {
                 <BrandMark />
                 <Drawer.Close
                   aria-label="Close navigation"
-                  className="rounded-md p-1 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+                  className="rounded-md p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
                 >
                   <X className="size-4" aria-hidden />
                 </Drawer.Close>
@@ -141,9 +141,9 @@ function StatusStrip() {
 function BrandMark() {
   return (
     <Link
-      href="/dashboard"
+      href="/today"
       className="flex items-center gap-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-      aria-label="Lumen CRM - go to dashboard"
+      aria-label="Lumen CRM - go to today"
     >
       <div className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary to-ai-accent shadow-sm ring-1 ring-primary/20">
         <Zap className="size-4 text-white drop-shadow-sm" aria-hidden />

@@ -1,8 +1,9 @@
 import { CampaignsHub } from "@/features/campaigns/CampaignsHub";
 
 export const metadata = {
-  title: "Campaigns · Lumen",
-  description: "Reasoned, approval-gated campaigns with a live delivery funnel.",
+  title: "Campaigns",
+  description:
+    "View, launch, and measure win-back campaigns. Track delivery funnels and real attributed revenue.",
 };
 
 export default function CampaignsPage() {

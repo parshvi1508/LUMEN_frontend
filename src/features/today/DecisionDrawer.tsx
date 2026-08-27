@@ -8,6 +8,26 @@ import { formatCurrency } from "@/lib/format";
 import { useWinBack, useDispatchCampaign } from "@/hooks/useCampaigns";
 import type { Decision } from "@/lib/schemas/insights";
 
+const FEATURE_LABELS: Record<string, string> = {
+  recency_days: "Days since last order",
+  frequency: "Order frequency",
+  monetary_total: "Total lifetime spend",
+  monetary_avg: "Average order value",
+  tenure_days: "Customer tenure",
+  avg_review: "Average review score",
+  avg_installments: "Avg installments used",
+  avg_freight_ratio: "Shipping cost ratio",
+  avg_delivery_delay: "Delivery delay",
+  review_word_count: "Review detail level",
+  review_text_ratio: "Review engagement",
+  review_topics: "Review sentiment topics",
+  payment_type: "Payment method",
+};
+
+function featureLabel(raw: string): string {
+  return FEATURE_LABELS[raw] ?? raw.replace(/_/g, " ");
+}
+
 const CHANNELS = [
   { value: "email" as const, label: "Email", icon: Mail },
   { value: "sms" as const, label: "SMS", icon: Smartphone },
@@ -75,7 +95,7 @@ export function DecisionDrawer({ decision, onClose }: Props) {
                 </div>
                 <Drawer.Close
                   aria-label="Close"
-                  className="rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                  className="rounded-md p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                 >
                   <X className="size-4" aria-hidden />
                 </Drawer.Close>
@@ -122,7 +142,7 @@ export function DecisionDrawer({ decision, onClose }: Props) {
                           className="flex items-center justify-between text-sm"
                         >
                           <span className="text-foreground">
-                            {r.feature.replace(/_/g, " ")}
+                            {featureLabel(r.feature)}
                           </span>
                           <span
                             className={`text-xs font-medium ${
