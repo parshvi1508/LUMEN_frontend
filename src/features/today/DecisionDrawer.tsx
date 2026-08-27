@@ -1,11 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Drawer } from "@base-ui/react/drawer";
-import { Target, TrendingUp, Brain, X } from "lucide-react";
+import { Target, TrendingUp, Brain, X, Mail, MessageSquare, Smartphone } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
 import { useWinBack, useDispatchCampaign } from "@/hooks/useCampaigns";
 import type { Decision } from "@/lib/schemas/insights";
+
+const CHANNELS = [
+  { value: "email" as const, label: "Email", icon: Mail },
+  { value: "sms" as const, label: "SMS", icon: Smartphone },
+  { value: "whatsapp" as const, label: "WhatsApp", icon: MessageSquare },
+];
 
 interface Props {
   decision: Decision | null;
@@ -16,12 +23,13 @@ export function DecisionDrawer({ decision, onClose }: Props) {
   const router = useRouter();
   const winBack = useWinBack();
   const dispatch = useDispatchCampaign();
+  const [channel, setChannel] = useState<"email" | "sms" | "whatsapp">("email");
 
   const handleLaunch = async () => {
     if (!decision) return;
     const campaign = await winBack.mutateAsync({
       name: `Win back ${decision.name}`,
-      channel: "email",
+      channel,
       message_template: `Hi {{first_name}}, we noticed you haven't ordered in a while. Come back and enjoy something special!`,
       tier: decision.value_tier,
     });
@@ -137,6 +145,33 @@ export function DecisionDrawer({ decision, onClose }: Props) {
                     Something went wrong. Try again.
                   </p>
                 )}
+
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    Channel
+                  </h3>
+                  <div className="mt-2 flex gap-2">
+                    {CHANNELS.map((ch) => {
+                      const Icon = ch.icon;
+                      const active = channel === ch.value;
+                      return (
+                        <button
+                          key={ch.value}
+                          type="button"
+                          onClick={() => setChannel(ch.value)}
+                          className={`flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors ${
+                            active
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border bg-surface-1 text-muted-foreground hover:bg-muted"
+                          }`}
+                        >
+                          <Icon className="size-3.5" aria-hidden />
+                          {ch.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               <div className="mt-auto border-t border-border p-5">
@@ -149,6 +184,9 @@ export function DecisionDrawer({ decision, onClose }: Props) {
                   <Target className="size-4" aria-hidden />
                   {busy ? "Launching..." : "Launch win-back campaign"}
                 </button>
+                <p className="mt-2 text-center text-[11px] text-muted-foreground">
+                  Creates a {channel} campaign targeting {decision?.value_tier} tier lapsed customers
+                </p>
               </div>
             </div>
           )}

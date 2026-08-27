@@ -263,10 +263,13 @@ function PriorityList({
         <h2 className="text-sm font-semibold text-foreground">
           Act on these first
         </h2>
-        <span className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Brain className="size-3" aria-hidden />
-          score to reason to action
-        </span>
+        <Link
+          href="/today"
+          className="flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+        >
+          Full worklist
+          <ArrowRight className="size-3" aria-hidden />
+        </Link>
       </div>
 
       <ul role="list" className="mt-3 flex-1 divide-y divide-border">
