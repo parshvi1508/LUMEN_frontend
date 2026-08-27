@@ -1,0 +1,16 @@
+{
+  "name": "Lumen - Customer Intelligence Platform",
+  "short_name": "Lumen",
+  "description": "Explainable customer intelligence. Churn scores, SHAP reasons, win-back campaigns.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -200,7 +200,10 @@ export default function LoginPage() {
             </button>
 
             <p className="mt-6 text-center text-xs text-muted-foreground">
-              By continuing you agree to Lumen&apos;s Terms and acknowledge our Privacy Policy.
+              By continuing you agree to Lumen&apos;s{" "}
+              <a href="/terms" className="underline hover:text-foreground">Terms</a> and
+              acknowledge our{" "}
+              <a href="/privacy" className="underline hover:text-foreground">Privacy Policy</a>.
             </p>
           </div>
         </div>

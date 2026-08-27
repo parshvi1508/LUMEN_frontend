@@ -21,6 +21,22 @@ import type { Decision, PortfolioSummary } from "@/lib/schemas/insights";
 
 const TIER_ORDER = ["high", "mid", "low"] as const;
 
+const FEATURE_LABELS: Record<string, string> = {
+  recency_days: "Days since last order",
+  frequency: "Order frequency",
+  monetary_total: "Total spend",
+  monetary_avg: "Avg order value",
+  tenure_days: "Tenure",
+  avg_review: "Reviews",
+  avg_installments: "Installments",
+  avg_freight_ratio: "Shipping ratio",
+  avg_delivery_delay: "Delivery delay",
+  review_word_count: "Review detail",
+  review_text_ratio: "Review engagement",
+  review_topics: "Review topics",
+  payment_type: "Payment method",
+};
+
 export default function DashboardPage() {
   const router = useRouter();
   const portfolio = usePortfolio();
@@ -347,7 +363,7 @@ function PriorityRow({ d }: { d: Decision }) {
                     : "bg-danger text-danger-foreground"
                 }`}
               >
-                {r.feature.replace(/_/g, " ")}
+                {FEATURE_LABELS[r.feature] ?? r.feature.replace(/_/g, " ")}
               </span>
             ))}
           </div>
@@ -358,7 +374,7 @@ function PriorityRow({ d }: { d: Decision }) {
         disabled={busy}
         onClick={handleWinBack}
         aria-label={`Win back ${d.name}`}
-        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface-1 px-2.5 py-1.5 text-xs font-medium text-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus-visible:opacity-100 disabled:opacity-50"
+        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface-1 px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50"
       >
         <Target className="size-3.5" aria-hidden />
         {busy ? "..." : "Win back"}

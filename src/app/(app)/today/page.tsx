@@ -27,6 +27,9 @@ export default function TodayPage() {
         }
       />
       <div className="px-6 md:px-8 py-6 space-y-5">
+        <p className="rounded-lg border border-border bg-surface-1 px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground">
+          Each row is a customer ranked by how much revenue you can recover. Click a row to see why they were flagged and launch a win-back campaign in one click.
+        </p>
         {p && (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <MiniStat label="Revenue at risk" value={formatCurrency(p.revenue_leakage)} accent />

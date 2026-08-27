@@ -1,8 +1,9 @@
 import { CampaignComposer } from "@/features/campaigns/CampaignComposer";
 
 export const metadata = {
-  title: "New campaign · Lumen",
-  description: "Draft and dispatch a reasoned campaign.",
+  title: "New Campaign",
+  description:
+    "Draft a new campaign: pick an audience, write your message, preview, and dispatch.",
 };
 
 export default function NewCampaignPage() {

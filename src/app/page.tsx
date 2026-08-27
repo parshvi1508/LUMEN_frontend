@@ -12,9 +12,9 @@ import {
 import { BRAND } from "@/lib/brand";
 
 export const metadata = {
-  title: `${BRAND.name} - see which customers are leaking revenue`,
+  title: "See which customers are leaking revenue",
   description:
-    "Lumen scores every customer for churn risk and value, shows the reason behind each score, and tells you who to win back and what it is worth.",
+    "Lumen scores every customer for churn risk and value, shows why each is flagged, and tells you who to win back and what it is worth.",
 };
 
 export default function Landing() {
@@ -72,8 +72,8 @@ export default function Landing() {
 
         <dl className="mt-14 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4">
           <Stat value="96,095" label="customers scored" />
-          <Stat value="0.012" label="calibrated Brier score" />
-          <Stat value="SHAP + NLP" label="reasons from reviews and behavior" />
+          <Stat value="98.8%" label="probability calibration accuracy" />
+          <Stat value="SHAP + NLP" label="plain-English reasons behind every score" />
           <Stat value="R$ P&L" label="real attributed revenue per campaign" />
         </dl>
       </section>
@@ -143,10 +143,24 @@ export default function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto max-w-6xl px-6 py-8 text-xs text-muted-foreground">
-          {BRAND.name} · Explainable customer intelligence · Demo on the public
-          Olist dataset
+      {/* Sticky mobile CTA */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-4 py-3 backdrop-blur-sm md:hidden">
+        <Link
+          href="/today"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm"
+        >
+          See today&apos;s actions
+          <ArrowRight className="size-4" aria-hidden />
+        </Link>
+      </div>
+
+      <footer className="border-t border-border pb-20 md:pb-0">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 px-6 py-8 text-xs text-muted-foreground">
+          <span>{BRAND.name} · Explainable customer intelligence · Demo on the public Olist dataset</span>
+          <span className="flex gap-3">
+            <Link href="/privacy" className="underline hover:text-foreground">Privacy</Link>
+            <Link href="/terms" className="underline hover:text-foreground">Terms</Link>
+          </span>
         </div>
       </footer>
     </main>

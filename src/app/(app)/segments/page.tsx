@@ -1,8 +1,9 @@
 import { SegmentWorkspace } from "@/features/segments/SegmentWorkspace";
 
 export const metadata = {
-  title: "Segments · Lumen",
-  description: "Build audiences with rules or natural language.",
+  title: "Segments",
+  description:
+    "Build customer audiences with rules or natural language. Preview size and overlap before saving.",
 };
 
 export default function SegmentsPage() {
