@@ -9,7 +9,9 @@ import {
   getCampaign,
   getCampaigns,
   getCampaignStats,
+  winBackCampaign,
 } from "@/lib/api/campaigns";
+import { getCampaignPnl } from "@/lib/api/insights";
 
 export function useCampaignsList() {
   return useQuery({
@@ -69,5 +71,23 @@ export function useDispatchCampaign() {
       qc.invalidateQueries({ queryKey: qk.campaignStats(campaign.id) });
       qc.invalidateQueries({ queryKey: qk.campaigns() });
     },
+  });
+}
+
+export function useWinBack() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: winBackCampaign,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: qk.campaigns() });
+    },
+  });
+}
+
+export function useCampaignPnl(id: string) {
+  return useQuery({
+    queryKey: qk.campaignPnl(id),
+    queryFn: () => getCampaignPnl(id),
+    enabled: Boolean(id),
   });
 }

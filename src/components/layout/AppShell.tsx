@@ -16,6 +16,7 @@ import {
   Zap,
   LogOut,
   ChevronsUpDown,
+  ListChecks,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BRAND } from "@/lib/brand";
@@ -23,6 +24,7 @@ import { useAuth } from "@/components/providers";
 import { TopBar } from "@/components/layout/TopBar";
 
 const NAV_ITEMS = [
+  { href: "/today",      label: "Today",      icon: ListChecks },
   { href: "/dashboard",  label: "Dashboard",  icon: LayoutDashboard },
   { href: "/customers",  label: "Customers",  icon: Users },
   { href: "/segments",   label: "Segments",   icon: PieChart },

@@ -49,6 +49,19 @@ export async function getCampaignStats(id: string): Promise<CampaignStats> {
   return apiGet<CampaignStats>(`/api/v1/campaigns/${id}/stats`);
 }
 
+export interface WinBackBody {
+  name: string;
+  channel: "whatsapp" | "sms" | "email";
+  message_template: string;
+  tier?: "high" | "mid" | "low";
+}
+
+export async function winBackCampaign(
+  body: WinBackBody,
+): Promise<CampaignOut> {
+  return apiPost<CampaignOut>("/api/v1/campaigns/win-back", body);
+}
+
 // GET /api/v1/campaigns/{id}/pnl - profit and loss breakdown
 export async function getCampaignPnl(
   id: string,
