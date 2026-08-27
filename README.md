@@ -1,10 +1,19 @@
 # lumen-crm-frontend
 
-Frontend for Lumen, an AI-native mini CRM for D2C brands. The product bet is
-explainable AI: every AI output is shown next to the reasoning that produced it,
-so a marketer can verify before acting. This app is the surface for that bet:
-live campaign funnels, per-rule audience impact, AI rationale panels, a
-propose-and-approve campaign flow, and a natural-language segment builder.
+**A lightweight CRM for small D2C brands that need Klaviyo-level customer
+intelligence without Klaviyo-level complexity.**
+
+Frontend for Lumen, a customer-intelligence platform for 5-person D2C teams.
+The product bet is explainable AI: every AI output is shown next to the
+reasoning that produced it, so a marketer can verify before acting. The founder
+opens it Monday morning and gets one answer: "Who should I talk to today, and
+why?"
+
+This app surfaces: a daily ranked worklist, live campaign funnels, per-rule
+audience impact, AI rationale panels, a propose-and-approve campaign flow,
+SHAP-based customer explanations, and a natural-language segment builder.
+
+**Live:** [lumencrm-frontend.vercel.app](https://lumencrm-frontend.vercel.app)
 
 It talks to the `xeno-crm-backend` CRM API over HTTP. It does not contain
 business logic for segments, dispatch, or the receipt loop; those live in the
@@ -30,7 +39,8 @@ All app routes live under `src/app/(app)` behind the server auth guard.
 | Route | What it shows |
 |---|---|
 | `/login` | Google OAuth sign-in plus the value proposition |
-| `/dashboard` | KPI cards, tier mix, the single best next move, and a 10-second action row |
+| `/today` | Daily ranked worklist: who to win back, why (SHAP), one-click campaign launch |
+| `/dashboard` | Revenue radar: KPI cards, tier mix, revenue at risk, priority customers |
 | `/customers` | Paginated customer book, tier filter chips, CSV import, detail sheet |
 | `/segments` | Rule builder, natural-language to segment, live preview with per-rule impact |
 | `/campaigns` | Campaign list and live status |

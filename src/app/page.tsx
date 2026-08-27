@@ -12,9 +12,9 @@ import {
 import { BRAND } from "@/lib/brand";
 
 export const metadata = {
-  title: "See which customers are leaking revenue",
+  title: "Klaviyo-level intelligence, zero Klaviyo complexity",
   description:
-    "Lumen scores every customer for churn risk and value, shows why each is flagged, and tells you who to win back and what it is worth.",
+    "Lumen is a lightweight CRM for small D2C brands. It scores every customer for churn risk and value, explains why, and tells your 5-person team who to win back today.",
 };
 
 export default function Landing() {
@@ -39,19 +39,20 @@ export default function Landing() {
         <div className="max-w-3xl">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-ai-border bg-ai/30 px-3 py-1 text-xs font-medium text-ai-foreground">
             <Brain className="size-3.5" aria-hidden />
-            Explainable customer intelligence
+            Built for small D2C teams
           </span>
           <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl">
-            See which customers are quietly{" "}
+            The CRM a 5-person D2C team can actually{" "}
             <span className="bg-gradient-to-r from-primary to-ai-accent bg-clip-text text-transparent">
-              leaking revenue
+              understand and act on
             </span>
-            , and exactly who to win back.
+            .
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            Most CRMs store customers. {BRAND.name} scores every one for churn
-            risk and value, shows the reason behind each score, and hands your
-            team a ranked action list with the money attached.
+            Klaviyo-level customer intelligence without Klaviyo-level complexity.
+            {" "}{BRAND.name} scores every customer for churn risk and value, shows
+            the reason behind each score in plain English, and hands your team a
+            ranked daily worklist: who to talk to, why, and what it is worth.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -78,47 +79,84 @@ export default function Landing() {
         </dl>
       </section>
 
+      {/* ICP + Why Lumen */}
       <section className="border-y border-border bg-surface-2">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            The problem
+            Who this is for
           </p>
           <h2 className="mt-2 max-w-2xl text-2xl font-semibold md:text-3xl">
-            You have thousands of customers. Some are churning right now. You
-            cannot see which, or what it is costing you.
+            Small D2C brands that need customer intelligence but do not have a
+            data team.
           </h2>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            If you run a direct-to-consumer brand with a few thousand customers,
+            you know some are churning. You cannot see which. Klaviyo can tell
+            you, but it costs more than your margins allow and takes a specialist
+            to operate. {BRAND.name} gives you the same insight in a tool your
+            whole team can read and act on in minutes.
+          </p>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             <Feature
               icon={<TrendingDown className="size-5" aria-hidden />}
               title="Find the leak"
-              body="Every customer is scored for reactivation risk and value. The dashboard leads with the revenue at risk across your dormant base."
+              body="Open the dashboard Monday morning and see exactly how much revenue is leaking from dormant customers, ranked by what you can recover."
             />
             <Feature
               icon={<Brain className="size-5" aria-hidden />}
               title="Trust the score"
-              body="Each score ships with its SHAP reasons, so your team sees why a customer is flagged, not just a number they have to take on faith."
+              body="Each score ships with its SHAP reasons in plain English. Your team sees why a customer is flagged, not a number they have to take on faith."
             />
             <Feature
               icon={<Target className="size-5" aria-hidden />}
               title="Act and measure"
-              body="Launch a win-back campaign on the flagged segment, then watch real attributed revenue and P&L, not a vanity open rate."
+              body="Launch a win-back campaign in one click, then watch real attributed revenue and P&L. Not a vanity open rate."
             />
           </div>
         </div>
       </section>
 
+      {/* Why not Klaviyo */}
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-6 md:grid-cols-2">
-          <Audience
-            icon={<Target className="size-5" aria-hidden />}
-            who="For the marketer"
-            body="A ranked worklist: who to message today, why, and one click to launch the campaign. No spreadsheets, no guessing."
+        <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          Why {BRAND.name}
+        </p>
+        <h2 className="mt-2 max-w-2xl text-2xl font-semibold md:text-3xl">
+          Three things Klaviyo cannot give a small team.
+        </h2>
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          <WhyCard
+            number="1"
+            title="Explainability"
+            body="Every AI score ships with the reasoning that produced it, visible next to the output. Your team can verify before acting."
           />
-          <Audience
-            icon={<LineChart className="size-5" aria-hidden />}
-            who="For the CMO"
-            body="Revenue at risk, recoverable value, and per-campaign P&L. Proof the spend pays for itself, in Reais."
+          <WhyCard
+            number="2"
+            title="Money framing"
+            body="The dashboard leads with revenue at risk and expected value, not engagement metrics. You see the cost of inaction in your currency."
           />
+          <WhyCard
+            number="3"
+            title="Decision, not dashboard"
+            body={`Open Lumen Monday morning and it answers: "Who should I talk to today, and why?" One click to launch the campaign. No spreadsheet, no guessing.`}
+          />
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-surface-2">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid gap-6 md:grid-cols-2">
+            <Audience
+              icon={<Target className="size-5" aria-hidden />}
+              who="For the marketer"
+              body="A ranked worklist: who to message today, why, and one click to launch the campaign. No spreadsheets, no guessing."
+            />
+            <Audience
+              icon={<LineChart className="size-5" aria-hidden />}
+              who="For the founder"
+              body="Revenue at risk, recoverable value, and per-campaign P&L. Proof the spend pays for itself, shown in real money."
+            />
+          </div>
         </div>
       </section>
 
@@ -189,6 +227,26 @@ function Feature({
     <div className="rounded-2xl border border-border bg-background p-6 shadow-card">
       <span className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
         {icon}
+      </span>
+      <h3 className="mt-4 text-base font-semibold">{title}</h3>
+      <p className="mt-1.5 text-sm text-muted-foreground">{body}</p>
+    </div>
+  );
+}
+
+function WhyCard({
+  number,
+  title,
+  body,
+}: {
+  number: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-border bg-surface-2 p-6 shadow-card">
+      <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+        {number}
       </span>
       <h3 className="mt-4 text-base font-semibold">{title}</h3>
       <p className="mt-1.5 text-sm text-muted-foreground">{body}</p>

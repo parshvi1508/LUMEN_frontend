@@ -131,7 +131,7 @@ function StatusStrip() {
         <span className="text-muted-foreground">AI</span>
         <span className="flex items-center gap-1 font-medium text-foreground">
           <span className="size-1.5 rounded-full bg-success-foreground" aria-hidden />
-          Groq
+          Qwen 3.6
         </span>
       </div>
     </div>
