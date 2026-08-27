@@ -15,6 +15,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePortfolio } from "@/hooks/usePortfolio";
 import { useDecisions } from "@/hooks/useDecisions";
+import { useWinBack, useDispatchCampaign } from "@/hooks/useCampaigns";
 import { formatCurrency } from "@/lib/format";
 import type { Decision, PortfolioSummary } from "@/lib/schemas/insights";
 
@@ -113,7 +114,7 @@ function HeroRisk({
 
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link
-            href="/campaigns/new"
+            href="/today"
             className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-primary shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <Sparkles className="size-4" aria-hidden />
@@ -289,6 +290,22 @@ function PriorityList({
 }
 
 function PriorityRow({ d }: { d: Decision }) {
+  const router = useRouter();
+  const winBack = useWinBack();
+  const dispatch = useDispatchCampaign();
+  const busy = winBack.isPending || dispatch.isPending;
+
+  const handleWinBack = async () => {
+    const campaign = await winBack.mutateAsync({
+      name: `Win back ${d.name}`,
+      channel: "email",
+      message_template: `Hi {{first_name}}, we noticed you haven't ordered in a while. Come back and enjoy something special!`,
+      tier: d.value_tier,
+    });
+    await dispatch.mutateAsync(campaign.id);
+    router.push(`/campaigns/${campaign.id}`);
+  };
+
   const initials = d.name
     .split(" ")
     .map((n) => n[0])
@@ -333,14 +350,16 @@ function PriorityRow({ d }: { d: Decision }) {
           </div>
         )}
       </div>
-      <Link
-        href="/campaigns/new"
+      <button
+        type="button"
+        disabled={busy}
+        onClick={handleWinBack}
         aria-label={`Win back ${d.name}`}
-        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface-1 px-2.5 py-1.5 text-xs font-medium text-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus-visible:opacity-100"
+        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface-1 px-2.5 py-1.5 text-xs font-medium text-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus-visible:opacity-100 disabled:opacity-50"
       >
         <Target className="size-3.5" aria-hidden />
-        Win back
-      </Link>
+        {busy ? "..." : "Win back"}
+      </button>
     </li>
   );
 }

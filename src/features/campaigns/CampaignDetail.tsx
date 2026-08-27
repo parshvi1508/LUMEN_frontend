@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -9,6 +9,7 @@ import {
   TrendingUp,
   XCircle,
   Radio,
+  DollarSign,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -17,7 +18,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CountUp } from "@/components/motion/CountUp";
 import { Stagger, StaggerItem } from "@/components/motion/motion";
 import { isApiError } from "@/lib/api";
-import { useCampaign, useCampaignStats } from "@/hooks/useCampaigns";
+import { formatCurrency } from "@/lib/format";
+import { useCampaign, useCampaignStats, useCampaignPnl } from "@/hooks/useCampaigns";
 import { computeReach } from "./funnel";
 import { FunnelChart } from "./FunnelChart";
 import { InsightPanel } from "./InsightPanel";
@@ -36,29 +38,30 @@ export function CampaignDetail({ id }: { id: string }) {
     else if (status === "active" || status === "dispatching") setInterval_(5000);
   }, [status]);
 
-  // Monotonic clamp: counts only move forward, even if a poll returns a stale
-  // or out-of-order snapshot. Mirrors the backend's status_rank guard in the UI.
   const seen = useRef<Record<string, number>>({});
-  const rows = useMemo(() => {
-    if (!stats.data) return [];
-    return computeReach(stats.data.funnel).map((r) => {
+  const [rows, setRows] = useState<ReturnType<typeof computeReach>>([]);
+  const [converted, setConverted] = useState(0);
+  const [failed, setFailed] = useState(0);
+
+  useEffect(() => {
+    if (!stats.data) return;
+    const clamped = computeReach(stats.data.funnel).map((r) => {
       const next = Math.max(seen.current[r.key] ?? 0, r.reach);
       seen.current[r.key] = next;
       return { ...r, reach: next };
     });
+    setRows(clamped);
+
+    const c = Math.max(seen.current._converted ?? 0, stats.data.converted ?? 0);
+    seen.current._converted = c;
+    setConverted(c);
+
+    const f = Math.max(seen.current._failed ?? 0, stats.data.failed ?? 0);
+    seen.current._failed = f;
+    setFailed(f);
   }, [stats.data]);
 
   const total = stats.data?.total ?? 0;
-  const converted = useMemo(() => {
-    const v = stats.data?.converted ?? 0;
-    seen.current._converted = Math.max(seen.current._converted ?? 0, v);
-    return seen.current._converted;
-  }, [stats.data]);
-  const failed = useMemo(() => {
-    const v = stats.data?.failed ?? 0;
-    seen.current._failed = Math.max(seen.current._failed ?? 0, v);
-    return seen.current._failed;
-  }, [stats.data]);
 
   const failureRate = total ? failed / total : 0;
   const conversionRate = total ? converted / total : 0;
@@ -273,6 +276,9 @@ export function CampaignDetail({ id }: { id: string }) {
 
             {/* AI insight beside the numbers it cites */}
             <InsightPanel id={id} enabled={insightEnabled} />
+
+            {/* P&L: the closed-loop proof */}
+            <PnlCard id={id} />
           </>
         )}
       </div>
@@ -301,6 +307,66 @@ function Kpi({
         <CountUp value={value} />
       </p>
       {sub && <p className="text-[11px] text-muted-foreground">{sub}</p>}
+    </div>
+  );
+}
+
+function PnlCard({ id }: { id: string }) {
+  const pnl = useCampaignPnl(id);
+
+  if (pnl.isLoading) return <Skeleton className="h-28 w-full rounded-xl" />;
+  if (!pnl.data || pnl.isError) return null;
+
+  const d = pnl.data;
+  const roiPct = d.roi * 100;
+
+  return (
+    <section className="rounded-xl border border-border bg-surface-1 p-4">
+      <h2 className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-foreground">
+        <DollarSign className="size-4 text-muted-foreground" aria-hidden />
+        Profit & Loss (attributed)
+      </h2>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <PnlStat label="Contacted" value={d.contacted.toLocaleString("en")} />
+        <PnlStat label="Cost" value={formatCurrency(d.cost)} />
+        <PnlStat label="Revenue" value={formatCurrency(d.attributed_revenue)} />
+        <PnlStat
+          label="Profit"
+          value={formatCurrency(d.profit)}
+          sub={`${roiPct >= 0 ? "+" : ""}${roiPct.toFixed(0)}% ROI`}
+          positive={d.profit >= 0}
+        />
+      </div>
+    </section>
+  );
+}
+
+function PnlStat({
+  label,
+  value,
+  sub,
+  positive,
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  positive?: boolean;
+}) {
+  return (
+    <div>
+      <p className="text-[11px] text-muted-foreground">{label}</p>
+      <p className="text-lg font-semibold tabular-nums text-foreground">
+        {value}
+      </p>
+      {sub && (
+        <p
+          className={`text-[11px] font-medium ${
+            positive ? "text-success-foreground" : "text-danger-foreground"
+          }`}
+        >
+          {sub}
+        </p>
+      )}
     </div>
   );
 }
