@@ -10,6 +10,13 @@ import {
   UserPlus,
   Target,
 } from "lucide-react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -206,6 +213,35 @@ function SupportStats({
   );
 }
 
+const TIER_COLORS: Record<string, string> = {
+  high: "var(--chart-5)",
+  mid: "var(--chart-3)",
+  low: "var(--muted-foreground)",
+};
+
+const TIER_LABELS: Record<string, string> = {
+  high: "High value",
+  mid: "Mid value",
+  low: "Low value",
+};
+
+function TierDonutTooltip({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: Array<{ payload: { label: string; count: number } }>;
+}) {
+  if (!active || !payload?.length) return null;
+  const p = payload[0].payload;
+  return (
+    <div className="rounded-lg border border-border bg-surface-3 px-3 py-1.5 text-xs shadow-overlay">
+      <span className="font-medium text-foreground">{p.label}</span>
+      <span className="text-muted-foreground"> {p.count.toLocaleString("en")}</span>
+    </div>
+  );
+}
+
 function TierPanel({
   counts,
   isLoading,
@@ -213,12 +249,16 @@ function TierPanel({
   counts?: Record<string, number>;
   isLoading: boolean;
 }) {
-  const fill: Record<string, string> = {
-    high: "bg-vip",
-    mid: "bg-info",
-    low: "bg-muted-foreground/50",
-  };
-  const max = counts ? Math.max(1, ...TIER_ORDER.map((t) => counts[t] ?? 0)) : 1;
+  const data = counts
+    ? TIER_ORDER.map((tier) => ({
+        tier,
+        label: TIER_LABELS[tier] ?? tier,
+        count: counts[tier] ?? 0,
+        fill: TIER_COLORS[tier],
+      }))
+    : [];
+  const total = data.reduce((s, d) => s + d.count, 0);
+
   return (
     <section
       aria-label="Customers by value tier"
@@ -226,37 +266,61 @@ function TierPanel({
     >
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold text-foreground">
-          Customers by value tier
+          Value tier distribution
         </h2>
         <span className="text-xs text-muted-foreground">ML-scored</span>
       </div>
       <div className="mt-4">
         {isLoading || !counts ? (
-          <Skeleton className="h-40 w-full rounded-lg" />
+          <Skeleton className="h-48 w-full rounded-lg" />
         ) : (
-          <ul className="space-y-3">
-            {TIER_ORDER.map((tier) => {
-              const count = counts[tier] ?? 0;
-              return (
-                <li key={tier}>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-medium capitalize text-foreground">
-                      {tier} value
-                    </span>
-                    <span className="tabular-nums text-muted-foreground">
-                      {count.toLocaleString("en")}
-                    </span>
-                  </div>
-                  <div className="mt-1 h-2.5 w-full overflow-hidden rounded-full bg-muted">
-                    <div
-                      className={`h-full rounded-full ${fill[tier]}`}
-                      style={{ width: `${(count / max) * 100}%` }}
-                    />
-                  </div>
+          <div className="flex items-center gap-6">
+            <div className="relative size-36 shrink-0" aria-hidden>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={data}
+                    dataKey="count"
+                    innerRadius="60%"
+                    outerRadius="95%"
+                    paddingAngle={2}
+                    strokeWidth={0}
+                  >
+                    {data.map((d) => (
+                      <Cell key={d.tier} fill={d.fill} />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<TierDonutTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-lg font-bold tabular-nums text-foreground">
+                  {total.toLocaleString("en")}
+                </span>
+                <span className="text-[10px] text-muted-foreground">total</span>
+              </div>
+            </div>
+            <ul className="space-y-2.5 flex-1">
+              {data.map((d) => (
+                <li key={d.tier} className="flex items-center gap-2.5">
+                  <span
+                    className="size-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: d.fill }}
+                    aria-hidden
+                  />
+                  <span className="flex-1 text-xs font-medium text-foreground">
+                    {d.label}
+                  </span>
+                  <span className="text-xs tabular-nums text-muted-foreground">
+                    {d.count.toLocaleString("en")}
+                  </span>
+                  <span className="w-10 text-right text-[10px] tabular-nums text-muted-foreground">
+                    {total > 0 ? `${((d.count / total) * 100).toFixed(0)}%` : "0%"}
+                  </span>
                 </li>
-              );
-            })}
-          </ul>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </section>
