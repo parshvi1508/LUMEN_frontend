@@ -9,6 +9,7 @@ import {
   Database,
   Radio,
   Brain,
+  Target,
   ArrowUpRight,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -142,6 +143,110 @@ export default function ArchitecturePage() {
               unoptimized
               className="h-auto w-full"
             />
+          </div>
+        </section>
+
+        {/* ML pipeline */}
+        <section className="rounded-2xl border border-border bg-surface-2 p-6 shadow-card">
+          <div className="mb-1 flex items-center gap-2">
+            <Brain className="size-4 text-muted-foreground" aria-hidden />
+            <h2 className="text-sm font-semibold text-foreground">
+              ML pipeline
+            </h2>
+          </div>
+          <p className="mb-4 text-xs text-muted-foreground">
+            Leak-safe, reproducible pipeline from raw orders to ranked decisions.
+            Train and inference share one feature path.
+          </p>
+          <div className="overflow-x-auto rounded-lg border border-border bg-surface-1 p-4">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-medium">
+              <FlowStep label="Olist orders" accent="muted" />
+              <FlowArrow />
+              <FlowStep label="Temporal split" accent="muted" />
+              <FlowArrow />
+              <FlowStep label="Feature engineering" accent="muted" />
+              <FlowArrow />
+              <FlowStep label="HistGradientBoosting" accent="primary" />
+              <FlowArrow />
+              <FlowStep label="Isotonic calibration" accent="primary" />
+              <FlowArrow />
+              <FlowStep label="Calibrated probs" accent="ai" />
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-medium">
+              <FlowStep label="Calibrated probs" accent="ai" />
+              <FlowArrow />
+              <FlowStep label="SHAP TreeExplainer" accent="ai" />
+              <FlowArrow />
+              <FlowStep label="Per-customer reasons" accent="ai" />
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-medium">
+              <FlowStep label="Calibrated probs" accent="ai" />
+              <FlowArrow />
+              <FlowStep label="EV = prob x monetary" accent="primary" />
+              <FlowArrow />
+              <FlowStep label="Ranked decision layer" accent="primary" />
+              <FlowArrow />
+              <FlowStep label="Today worklist" accent="success" />
+            </div>
+          </div>
+        </section>
+
+        {/* Decision flow */}
+        <section className="rounded-2xl border border-border bg-surface-2 p-6 shadow-card">
+          <div className="mb-1 flex items-center gap-2">
+            <Target className="size-4 text-muted-foreground" aria-hidden />
+            <h2 className="text-sm font-semibold text-foreground">
+              Closed-loop decision flow
+            </h2>
+          </div>
+          <p className="mb-4 text-xs text-muted-foreground">
+            From insight to measured outcome in three clicks.
+          </p>
+          <div className="overflow-x-auto rounded-lg border border-border bg-surface-1 p-4">
+            <ol className="space-y-2.5 text-xs">
+              <DecisionStep
+                step={1}
+                actor="Marketer"
+                action="Opens Today worklist"
+                detail="Frontend calls GET /insights/decisions"
+              />
+              <DecisionStep
+                step={2}
+                actor="CRM API"
+                action="Scores + ranks by expected value"
+                detail="Returns decision list with SHAP reasons"
+              />
+              <DecisionStep
+                step={3}
+                actor="Marketer"
+                action='Clicks "Win back"'
+                detail="Frontend calls POST /campaigns/win-back"
+              />
+              <DecisionStep
+                step={4}
+                actor="CRM API"
+                action="Creates segment + campaign"
+                detail="Dispatches via POST /send to channel service"
+              />
+              <DecisionStep
+                step={5}
+                actor="Channel"
+                action="Sends messages, fires callbacks"
+                detail="POST /receipts: sent, delivered, converted"
+              />
+              <DecisionStep
+                step={6}
+                actor="CRM API"
+                action="Appends events, upgrades status"
+                detail="Append-only log, never-downgrade rule"
+              />
+              <DecisionStep
+                step={7}
+                actor="Marketer"
+                action="Views campaign P&L"
+                detail="Attributed revenue vs predicted expected value"
+              />
+            </ol>
           </div>
         </section>
 
@@ -373,6 +478,53 @@ function SkippedItem({ label, reason }: { label: string; reason: string }) {
         <span className="text-muted-foreground">: </span>
         <span>{reason}</span>
       </span>
+    </li>
+  );
+}
+
+const ACCENT_CLASSES: Record<string, string> = {
+  muted: "border-border bg-background text-foreground",
+  primary: "border-primary/30 bg-primary/10 text-primary",
+  ai: "border-ai-border bg-ai/40 text-ai-foreground",
+  success: "border-success-border bg-success text-success-foreground",
+};
+
+function FlowStep({ label, accent }: { label: string; accent: string }) {
+  return (
+    <span className={`inline-flex rounded-lg border px-2.5 py-1.5 ${ACCENT_CLASSES[accent] ?? ACCENT_CLASSES.muted}`}>
+      {label}
+    </span>
+  );
+}
+
+function FlowArrow() {
+  return (
+    <ArrowUpRight className="size-3.5 shrink-0 rotate-45 text-muted-foreground" aria-hidden />
+  );
+}
+
+function DecisionStep({
+  step,
+  actor,
+  action,
+  detail,
+}: {
+  step: number;
+  actor: string;
+  action: string;
+  detail: string;
+}) {
+  return (
+    <li className="flex items-start gap-3">
+      <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
+        {step}
+      </span>
+      <div>
+        <p className="font-medium text-foreground">
+          <span className="text-muted-foreground">{actor}:</span> {action}
+        </p>
+        <p className="text-muted-foreground">{detail}</p>
+      </div>
     </li>
   );
 }
